@@ -99,6 +99,9 @@ When creating this spec from a user prompt:
 - [ ] Success criteria are measurable
 - [ ] Scope is clearly bounded
 - [ ] Dependencies and assumptions identified
+- [ ] Performance benchmarks specified (Constitution: Performance Standards)
+- [ ] User experience consistency requirements defined (Constitution: UX Consistency)
+- [ ] Quality standards and testing approach outlined (Constitution: Code Quality & TDD)
 
 ---
 

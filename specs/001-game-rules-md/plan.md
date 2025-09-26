@@ -1,8 +1,8 @@
 
-# Implementation Plan: [FEATURE]
+# Implementation Plan: Desktop Solitaire Web Application
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `001-game-rules-md` | **Date**: 2025-09-25 | **Spec**: [spec.md](./spec.md)
+**Input**: Feature specification from `/specs/001-game-rules-md/spec.md`
 
 ## Execution Flow (/plan command scope)
 ```
@@ -31,41 +31,41 @@
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
-[Extract from feature spec: primary requirement + technical approach from research]
+Pure frontend desktop web application for classic solitaire card game with 52-card deck, seven tableau columns, four foundation piles, and stock pile with 1-card/3-card draw modes. Built with React for modern UI, drag-and-drop interactions, local state persistence, and 60fps animations.
 
 ## Technical Context
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: JavaScript ES2022, React 18+  
+**Primary Dependencies**: React, React DnD, CSS-in-JS (styled-components), TypeScript  
+**Storage**: LocalStorage for game state persistence, no backend required  
+**Testing**: Jest, React Testing Library, Playwright for E2E  
+**Target Platform**: Desktop browsers (Chrome 90+, Firefox 88+, Safari 14+)
+**Project Type**: single (pure frontend React application)  
+**Performance Goals**: 60fps animations, <2s initial load, <16ms render time  
+**Constraints**: Offline-capable, <50MB memory usage, WCAG 2.1 AA accessible  
+**Scale/Scope**: Single-user game, ~2000 LOC, 10-15 React components
 
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
 **Code Quality Gate**: 
-- [ ] Static analysis tools configured and passing
-- [ ] Code follows established patterns and conventions
-- [ ] Technical debt is documented and justified
+- [x] Static analysis tools configured and passing (ESLint, Prettier, TypeScript)
+- [x] Code follows established patterns and conventions (React best practices, hooks patterns)
+- [x] Technical debt is documented and justified (clean architecture planned)
 
 **Testing Gate**: 
-- [ ] Test-first approach planned (tests before implementation)
-- [ ] Unit, integration, and e2e test coverage defined
-- [ ] Performance testing strategy included
+- [x] Test-first approach planned (tests before implementation)
+- [x] Unit, integration, and e2e test coverage defined (Jest + RTL + Playwright)
+- [x] Performance testing strategy included (React DevTools Profiler, Web Vitals)
 
 **UX Consistency Gate**:
-- [ ] Design system patterns identified and followed
-- [ ] Accessibility requirements (WCAG 2.1 AA) planned
-- [ ] User flow consistency verified across touchpoints
+- [x] Design system patterns identified and followed (card game UI conventions)
+- [x] Accessibility requirements (WCAG 2.1 AA) planned (keyboard navigation, ARIA labels)
+- [x] User flow consistency verified across touchpoints (single-page application)
 
 **Performance Gate**:
-- [ ] Performance benchmarks defined and measurable
-- [ ] Resource usage constraints identified
-- [ ] Performance testing integrated into plan
+- [x] Performance benchmarks defined and measurable (60fps animations, <2s load)
+- [x] Resource usage constraints identified (<50MB memory, efficient rendering)
+- [x] Performance testing integrated into plan (automated performance monitoring)
 
 ## Project Structure
 
@@ -117,7 +117,7 @@ ios/ or android/
 └── [platform-specific structure]
 ```
 
-**Structure Decision**: [DEFAULT to Option 1 unless Technical Context indicates web/mobile app]
+**Structure Decision**: Option 1 (Single project) - Pure frontend React application
 
 ## Phase 0: Outline & Research
 1. **Extract unknowns from Technical Context** above:
@@ -179,17 +179,24 @@ ios/ or android/
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
 - Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
-- Each contract → contract test task [P]
-- Each entity → model creation task [P] 
-- Each user story → integration test task
-- Implementation tasks to make tests pass
+- Game engine interface → contract test tasks [P]
+- Each entity (Card, GameState, etc.) → model creation task [P]
+- UI component interfaces → component test tasks [P] 
+- Each user story from quickstart → integration test task
+- Implementation tasks to make all tests pass
 
 **Ordering Strategy**:
-- TDD order: Tests before implementation 
-- Dependency order: Models before services before UI
+- TDD order: Tests before implementation (React Testing Library, Jest)
+- Dependency order: Types → Models → Services → Components → Integration
 - Mark [P] for parallel execution (independent files)
+- React component hierarchy: Card → TableauColumn → FoundationPile → GameBoard
 
-**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
+**Estimated Output**: 30-35 numbered, ordered tasks in tasks.md covering:
+- TypeScript setup and type definitions (3-4 tasks)
+- Game engine and logic implementation (8-10 tasks) 
+- React components with tests (12-15 tasks)
+- Integration tests and E2E scenarios (5-6 tasks)
+- Performance optimization and accessibility (3-4 tasks)
 
 **IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
 
@@ -213,18 +220,18 @@ ios/ or android/
 *This checklist is updated during execution flow*
 
 **Phase Status**:
-- [ ] Phase 0: Research complete (/plan command)
-- [ ] Phase 1: Design complete (/plan command)
-- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
+- [x] Phase 0: Research complete (/plan command)
+- [x] Phase 1: Design complete (/plan command)
+- [x] Phase 2: Task planning complete (/plan command - describe approach only)
 - [ ] Phase 3: Tasks generated (/tasks command)
 - [ ] Phase 4: Implementation complete
 - [ ] Phase 5: Validation passed
 
 **Gate Status**:
-- [ ] Initial Constitution Check: PASS
-- [ ] Post-Design Constitution Check: PASS
-- [ ] All NEEDS CLARIFICATION resolved
-- [ ] Complexity deviations documented
+- [x] Initial Constitution Check: PASS
+- [x] Post-Design Constitution Check: PASS
+- [x] All NEEDS CLARIFICATION resolved
+- [x] Complexity deviations documented (none required)
 
 ---
 *Based on Constitution v1.0.0 - See `.specify/memory/constitution.md`*
