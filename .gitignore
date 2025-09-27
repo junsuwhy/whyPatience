@@ -1,2 +1,6 @@
 .vscode/
 .claude/settings.local.json
+specs/**/ignore/
+.node_modules/
+dist/
+build/
