@@ -57,19 +57,19 @@
 
 - [x] T014 [P] Card types and enums in src/types/card.ts
 - [x] T015 [P] Game state types in src/types/game-state.ts
-- [ ] T016 [P] Position and movement types in src/types/position.ts
-- [ ] T017 [P] User preferences types in src/types/preferences.ts
+- [x] T016 [P] Position and movement types in src/types/position.ts
+- [x] T017 [P] User preferences types in src/types/preferences.ts
 
 ### Game Engine and Models
 
-- [ ] T018 [P] Card model with validation in src/models/card.ts
-- [ ] T019 [P] TableauColumn model in src/models/tableau-column.ts
-- [ ] T020 [P] FoundationPile model in src/models/foundation-pile.ts
-- [ ] T021 [P] StockPile model in src/models/stock-pile.ts
-- [ ] T022 [P] GameState model in src/models/game-state.ts
-- [ ] T023 [P] Move model and history in src/models/move.ts
-- [ ] T024 Game engine core logic in src/services/game-engine.ts
-- [ ] T025 Game validation rules in src/services/game-validation.ts
+- [x] T018 [P] Card model with validation in src/models/card.ts
+- [x] T019 [P] TableauColumn model in src/models/tableau-column.ts
+- [x] T020 [P] FoundationPile model in src/models/foundation-pile.ts
+- [x] T021 [P] StockPile model in src/models/stock-pile.ts
+- [x] T022 [P] GameState model in src/models/game-state.ts
+- [x] T023 [P] Move model and history in src/models/move.ts
+- [x] T024 Game engine core logic in src/services/game-engine.ts
+- [x] T025 Game validation rules in src/services/game-validation.ts
 - [ ] T026 Storage service implementation in src/services/storage.ts
 
 ### React Components

@@ -8,17 +8,17 @@
 
 ## 工項 tasks
 
-- [ ] 建立 `src/types/position.ts` 檔案
-- [ ] 定義 `Position` 介面 - 包含 x, y 座標
-- [ ] 定義 `Dimensions` 介面 - 包含 width, height
-- [ ] 定義 `Rectangle` 介面 - 結合 Position 和 Dimensions
-- [ ] 定義 `DragState` 聯合類型 - 'idle' | 'dragging' | 'dropping'
-- [ ] 定義 `DropZone` 介面 - 包含區域ID、類型、接受規則
-- [ ] 定義 `MovementDirection` 聯合類型 - 'up' | 'down' | 'left' | 'right'
-- [ ] 定義 `AnimationState` 介面 - 動畫狀態和時間控制
-- [ ] 定義 `DropResult` 介面 - 拖放操作結果
-- [ ] 添加 JSDoc 文檔說明每個類型的用途
-- [ ] 匯出所有類型定義
+- [x] 建立 `src/types/position.ts` 檔案
+- [x] 定義 `Position` 介面 - 包含 x, y 座標
+- [x] 定義 `Dimensions` 介面 - 包含 width, height
+- [x] 定義 `Rectangle` 介面 - 結合 Position 和 Dimensions
+- [x] 定義 `DragState` 聯合類型 - 'idle' | 'dragging' | 'dropping'
+- [x] 定義 `DropZone` 介面 - 包含區域ID、類型、接受規則
+- [x] 定義 `MovementDirection` 聯合類型 - 'up' | 'down' | 'left' | 'right'
+- [x] 定義 `AnimationState` 介面 - 動畫狀態和時間控制
+- [x] 定義 `DropResult` 介面 - 拖放操作結果
+- [x] 添加 JSDoc 文檔說明每個類型的用途
+- [x] 匯出所有類型定義
 
 ## 測試方式
 
@@ -34,6 +34,9 @@ npx tsc --noEmit
 
 # 檢查類型定義的匯出
 npm run lint
+
+# 執行 T016 位置類型測試
+npm test tests/unit/T016_position_types.test.ts
 ```
 
 ## AI 使用工具

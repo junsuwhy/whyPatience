@@ -89,3 +89,23 @@ export interface OverallStatistics {
   weekly: GameStatistics;
   daily: GameStatistics;
 }
+
+// Export position and movement types
+export type {
+  Position as SpatialPosition,
+  Dimensions,
+  Rectangle,
+  DragState,
+  DropZone,
+  MovementDirection,
+  AnimationState,
+  DropResult,
+} from './position';
+
+export {
+  positionsEqual,
+  calculateDistance,
+  isPositionInRectangle,
+  createRectangle,
+  interpolatePosition,
+} from './position';

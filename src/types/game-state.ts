@@ -4,7 +4,7 @@
  * tableau states, foundation states, stock states, statistics, and history tracking.
  */
 
-import { Card, Suit, Rank } from './card.js';
+import { Card, Suit, Rank } from './card';
 
 /**
  * Game phase enumeration representing all possible states of the game.
