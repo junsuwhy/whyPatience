@@ -1,5 +1,6 @@
 請讀取 @.specify/memory/constitution.md, @specs/001-game-rules-md/tasks.md, @specs/001-game-rules-md/plan.md ，並根據 tasks.md 上面的任務清單，找到 @tasks 資料夾下當前的 TXXX_{task_name}.md 檔案
 例如目前任務如果是 T001_任務名稱 ，對應的就是 tasks/T001_任務名稱.md
+
 參考該 md 檔內的任務描述，依照「工項 tasks」內容，使用工具和撰寫程式協助我完成
 注意「工項 tasks」的 checkbox list 中，每完成一項就要打 [x] 標記
 

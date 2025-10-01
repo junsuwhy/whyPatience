@@ -34,7 +34,7 @@ describe('T002 Install Dependencies Test', () => {
   test('React 18+ should be installed', () => {
     expect(packageJson.dependencies).toHaveProperty('react');
     expect(packageJson.dependencies).toHaveProperty('react-dom');
-    
+
     // Check if React version is 18+
     const reactVersion = packageJson.dependencies.react;
     const versionNumber = reactVersion.replace(/[^\d.]/g, '');
@@ -52,24 +52,39 @@ describe('T002 Install Dependencies Test', () => {
   });
 
   test('TypeScript packages should be installed', () => {
-    expect(packageJson.devDependencies || packageJson.dependencies).toHaveProperty('typescript');
-    expect(packageJson.devDependencies || packageJson.dependencies).toHaveProperty('@types/react');
-    expect(packageJson.devDependencies || packageJson.dependencies).toHaveProperty('@types/react-dom');
+    expect(
+      packageJson.devDependencies || packageJson.dependencies
+    ).toHaveProperty('typescript');
+    expect(
+      packageJson.devDependencies || packageJson.dependencies
+    ).toHaveProperty('@types/react');
+    expect(
+      packageJson.devDependencies || packageJson.dependencies
+    ).toHaveProperty('@types/react-dom');
   });
 
   test('Testing packages should be installed', () => {
-    const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+    const allDeps = {
+      ...packageJson.dependencies,
+      ...packageJson.devDependencies,
+    };
     expect(allDeps).toHaveProperty('@testing-library/react');
     expect(allDeps).toHaveProperty('@testing-library/jest-dom');
   });
 
   test('Playwright should be installed', () => {
-    const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+    const allDeps = {
+      ...packageJson.dependencies,
+      ...packageJson.devDependencies,
+    };
     expect(allDeps).toHaveProperty('@playwright/test');
   });
 
   test('Development tools should be installed', () => {
-    const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+    const allDeps = {
+      ...packageJson.dependencies,
+      ...packageJson.devDependencies,
+    };
     expect(allDeps).toHaveProperty('@types/styled-components');
     expect(allDeps).toHaveProperty('@vitejs/plugin-react');
   });
@@ -84,7 +99,7 @@ describe('T002 Install Dependencies Test', () => {
       'typescript',
       '@types',
       '@testing-library',
-      '@playwright'
+      '@playwright',
     ];
 
     requiredPackages.forEach(pkg => {
@@ -101,7 +116,7 @@ describe('T002 Install Dependencies Test', () => {
       expect(typeof React).toBe('object');
       expect(typeof ReactDOM).toBe('object');
     `;
-    
+
     expect(() => {
       eval(reactImportTest);
     }).not.toThrow();

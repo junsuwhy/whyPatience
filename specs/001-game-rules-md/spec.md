@@ -5,13 +5,14 @@
 **Status**: Draft  
 **Input**: User description: "建立一個純前端桌面版網頁應用程式，為撲克牌遊戲，內容為一人製的接龍，可參考 @game_rules.md"
 
-
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### Primary User Story
+
 A user opens the web application in their desktop browser and plays a classic solitaire card game. They start with a properly shuffled and dealt layout of cards, move cards according to solitaire rules, and aim to collect all cards in four foundation piles to win the game.
 
 ### Acceptance Scenarios
+
 1. **Given** the application loads, **When** user starts a new game, **Then** 52 cards are dealt in seven tableau columns (1-7 cards each, top card face-up) with remaining cards in stock pile
 2. **Given** cards are properly dealt, **When** user clicks on a face-down card in tableau after moving the face-up card above it, **Then** the face-down card flips to face-up
 3. **Given** user has an Ace card available, **When** user drags the Ace to foundation area, **Then** a foundation pile starts and accepts cards of same suit in ascending order (A-K)
@@ -20,14 +21,16 @@ A user opens the web application in their desktop browser and plays a classic so
 6. **Given** all cards are collected in four foundation piles, **When** game state is checked, **Then** victory condition is triggered
 
 ### Edge Cases
+
 - What happens when stock pile is empty and user clicks it?
 - How does system handle invalid card moves?
 - What happens when no more moves are available?
 - How does system handle browser window resize during gameplay?
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
+
 - **FR-001**: System MUST deal 52 standard playing cards into initial solitaire layout (7 tableau columns + stock pile)
 - **FR-002**: System MUST allow users to move face-up cards between tableau columns following descending rank and alternating color rules
 - **FR-003**: System MUST automatically flip face-down cards when they become the top card of a tableau column
@@ -47,7 +50,8 @@ A user opens the web application in their desktop browser and plays a classic so
 - **FR-017**: System MUST be accessible with keyboard navigation support
 - **FR-018**: System MUST work offline as a pure frontend application
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
+
 - **Card**: Represents a playing card with rank (A-K), suit (♠♥♦♣), face-up/down state, and position
 - **TableauColumn**: Game area column containing stack of cards with specific placement rules
 - **FoundationPile**: Collection area for cards of same suit in ascending order
@@ -58,17 +62,20 @@ A user opens the web application in their desktop browser and plays a classic so
 ---
 
 ## Review & Acceptance Checklist
-*GATE: Automated checks run during main() execution*
+
+_GATE: Automated checks run during main() execution_
 
 ### Content Quality
+
 - [x] No implementation details (languages, frameworks, APIs)
 - [x] Focused on user value and business needs
 - [x] Written for non-technical stakeholders
 - [x] All mandatory sections completed
 
 ### Requirement Completeness
+
 - [x] No [NEEDS CLARIFICATION] markers remain
-- [x] Requirements are testable and unambiguous  
+- [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Scope is clearly bounded
 - [x] Dependencies and assumptions identified
@@ -79,7 +86,8 @@ A user opens the web application in their desktop browser and plays a classic so
 ---
 
 ## Execution Status
-*Updated by main() during processing*
+
+_Updated by main() during processing_
 
 - [x] User description parsed
 - [x] Key concepts extracted

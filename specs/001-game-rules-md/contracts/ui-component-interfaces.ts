@@ -35,7 +35,7 @@ export interface TableauColumnProps {
   validDropTarget: boolean;
 }
 
-// Foundation pile component  
+// Foundation pile component
 export interface FoundationPileProps {
   pile: FoundationPile;
   pileIndex: number;

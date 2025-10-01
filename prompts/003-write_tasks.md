@@ -4,6 +4,7 @@
 撰寫過程都要參考 constitution.md、plan.md 和任何有引用到內容的說明文件
 
 寫的過程有任何規劃、思考流程、執行指令、執行結果等，請用適當方式使用 discord_send_message, discord_send_embed 工具發送完成通知到 Discord （變數請使用 @.env 內容）：
+
 - webhookUrl: https://discord.com/api/webhooks/{$DISCORD_WEBHOOK_ID}/{$DISCORD_WEBHOOK_HASH}
 - content: 前面所寫的執行過程
 - 格式：請用 🔄 做為開頭，可有 Markdown，指令請用 `...` 包起來
@@ -12,6 +13,7 @@
 寫好後回覆我新增的檔名，我要檢查內容
 
 最後，請使用 discord_send_message, discord_send_embed 工具發送完成通知到 Discord （變數請使用 @.env 內容）：
+
 - webhookUrl: https://discord.com/api/webhooks/{$DISCORD_WEBHOOK_ID}/{$DISCORD_WEBHOOK_HASH}
 - content: 前面建立的檔案內容
 - 格式：請創建一個 Discord embed 來呈現，注意：填入 embeds 時確保所有 JSON 欄位都是有效的資料型態（字串、數字、布林值、物件、陣列）

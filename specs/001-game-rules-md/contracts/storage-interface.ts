@@ -8,17 +8,17 @@ export interface StorageContract {
   saveGameState(gameState: GameState): Promise<boolean>;
   loadGameState(): Promise<GameState | null>;
   clearGameState(): Promise<boolean>;
-  
-  // User preferences persistence  
+
+  // User preferences persistence
   savePreferences(preferences: UserPreferences): Promise<boolean>;
   loadPreferences(): Promise<UserPreferences>;
   resetPreferences(): Promise<UserPreferences>;
-  
+
   // Statistics persistence
   saveStatistics(stats: OverallStatistics): Promise<boolean>;
   loadStatistics(): Promise<OverallStatistics>;
   updateGameResult(won: boolean, moves: number, time: number): Promise<void>;
-  
+
   // Storage management
   getStorageInfo(): StorageInfo;
   clearAllData(): Promise<boolean>;
@@ -28,10 +28,10 @@ export interface StorageContract {
 
 export interface StorageInfo {
   available: boolean;
-  used: number;      // Bytes used
-  total: number;     // Total bytes available
-  quota: number;     // Storage quota
-  version: string;   // Schema version
+  used: number; // Bytes used
+  total: number; // Total bytes available
+  quota: number; // Storage quota
+  version: string; // Schema version
 }
 
 // Storage events
@@ -43,7 +43,11 @@ export interface StorageEvents {
 }
 
 export interface StorageError {
-  type: 'QUOTA_EXCEEDED' | 'PERMISSION_DENIED' | 'DATA_CORRUPTION' | 'NETWORK_ERROR';
+  type:
+    | 'QUOTA_EXCEEDED'
+    | 'PERMISSION_DENIED'
+    | 'DATA_CORRUPTION'
+    | 'NETWORK_ERROR';
   message: string;
   key?: string;
   data?: any;
@@ -51,13 +55,13 @@ export interface StorageError {
 
 // Storage configuration
 export interface StorageConfig {
-  namespace: string;           // Key prefix for all stored data
-  version: string;             // Schema version
-  compression: boolean;        // Enable data compression
-  encryption: boolean;         // Enable data encryption (future feature)
-  maxHistorySize: number;      // Maximum move history to store
-  autoSave: boolean;          // Auto-save game state on moves
-  saveInterval: number;        // Auto-save interval in milliseconds
+  namespace: string; // Key prefix for all stored data
+  version: string; // Schema version
+  compression: boolean; // Enable data compression
+  encryption: boolean; // Enable data encryption (future feature)
+  maxHistorySize: number; // Maximum move history to store
+  autoSave: boolean; // Auto-save game state on moves
+  saveInterval: number; // Auto-save interval in milliseconds
 }
 
 // Data migration interface

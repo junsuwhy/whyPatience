@@ -8,22 +8,22 @@ export interface GameEngineContract {
   initializeGame(drawMode: DrawMode): GameState;
   dealCards(): GameState;
   resetGame(): GameState;
-  
+
   // Card movement operations
   moveCards(cards: Card[], from: Position, to: Position): MoveResult;
   undoMove(): UndoResult;
   autoComplete(): boolean;
-  
+
   // Game state queries
   isValidMove(cards: Card[], from: Position, to: Position): boolean;
   getValidMoves(card: Card): Position[];
   isGameWon(): boolean;
   canUndo(): boolean;
-  
+
   // Stock pile operations
   drawFromStock(): DrawResult;
   cycleStock(): boolean;
-  
+
   // Game statistics
   getGameStatistics(): GameStatistics;
   updateStatistics(move: Move): void;

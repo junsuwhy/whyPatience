@@ -5,6 +5,7 @@
 為 Desktop Solitaire Web Application 安裝所有必要的相依套件，包括 React 18+、React DnD、styled-components、TypeScript、Jest 和 Playwright。這是 Phase 3.1 Setup 階段的關鍵任務，需要確保所有套件版本相容並符合專案的技術需求。
 
 根據 plan.md 的技術規格：
+
 - React 18+ 作為主要 UI 框架
 - React DnD 實現拖拉功能
 - styled-components 做為 CSS-in-JS 解決方案
@@ -14,15 +15,15 @@
 
 ## 工項 tasks
 
-- [ ] 安裝 React 18+ 和相關核心套件 (`react`, `react-dom`)
-- [ ] 安裝 React DnD 套件 (`react-dnd`, `react-dnd-html5-backend`)
-- [ ] 安裝 styled-components 套件 (`styled-components`)
-- [ ] 安裝 TypeScript 相關套件 (`typescript`, `@types/react`, `@types/react-dom`)
-- [ ] 安裝測試相關套件 (`jest`, `@testing-library/react`, `@testing-library/jest-dom`)
-- [ ] 安裝 Playwright 進行 E2E 測試 (`@playwright/test`)
-- [ ] 安裝開發工具套件 (`@types/styled-components`, `@vitejs/plugin-react`)
-- [ ] 驗證 `package.json` 更新正確
-- [ ] 執行 `npm install` 確保所有套件安裝成功
+- [x] 安裝 React 18+ 和相關核心套件 (`react`, `react-dom`)
+- [x] 安裝 React DnD 套件 (`react-dnd`, `react-dnd-html5-backend`)
+- [x] 安裝 styled-components 套件 (`styled-components`)
+- [x] 安裝 TypeScript 相關套件 (`typescript`, `@types/react`, `@types/react-dom`)
+- [x] 安裝測試相關套件 (`jest`, `@testing-library/react`, `@testing-library/jest-dom`)
+- [x] 安裝 Playwright 進行 E2E 測試 (`@playwright/test`)
+- [x] 安裝開發工具套件 (`@types/styled-components`, `@vitejs/plugin-react`)
+- [x] 驗證 `package.json` 更新正確
+- [x] 執行 `npm install` 確保所有套件安裝成功
 
 ## 測試方式
 

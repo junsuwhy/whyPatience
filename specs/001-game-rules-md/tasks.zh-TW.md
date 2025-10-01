@@ -4,6 +4,7 @@
 **先決條件**: plan.md (必要), research.md, data-model.md, contracts/
 
 ## 執行流程 (主程序)
+
 ```
 1. 從功能目錄載入 plan.md
    → 提取: React 18+, TypeScript, React DnD, styled-components
@@ -25,16 +26,20 @@
 ```
 
 ## 格式: `[編號] [P?] 描述`
+
 - **[P]**: 可並行執行 (不同檔案，無依賴)
 - 描述中包含確切的檔案路徑
 
 ## 階段 3.1: 設置
+
 - [ ] T001 建立 React 專案結構，使用 Vite 和 TypeScript 配置
 - [ ] T002 安裝依賴項: React 18+, React DnD, styled-components, TypeScript, Jest, Playwright
 - [ ] T003 [P] 配置 ESLint, Prettier, 和 TypeScript 嚴格模式 (憲章: 程式碼品質卓越)
 
 ## 階段 3.2: 測試優先 (TDD) ⚠️ 必須在 3.3 前完成
+
 **重要: 根據憲章原則 II (TDD)，這些測試必須撰寫並必須失敗，然後才能進行任何實作**
+
 - [ ] T004 [P] GameEngineContract 合約測試 tests/contract/test_game_engine.test.ts
 - [ ] T005 [P] StorageContract 合約測試 tests/contract/test_storage.test.ts
 - [ ] T006 [P] UI 組件介面合約測試 tests/contract/test_ui_components.test.tsx
@@ -47,13 +52,16 @@
 - [ ] T013 [P] 本地儲存持久化整合測試 tests/integration/test_persistence.test.ts
 
 ## 階段 3.3: 核心實作 (僅在測試失敗後)
+
 ### 類型定義
+
 - [ ] T014 [P] 卡片類型和枚舉 src/types/card.ts
 - [ ] T015 [P] 遊戲狀態類型 src/types/game-state.ts
 - [ ] T016 [P] 位置和移動類型 src/types/position.ts
 - [ ] T017 [P] 使用者偏好類型 src/types/preferences.ts
 
 ### 遊戲引擎和模型
+
 - [ ] T018 [P] 卡片模型與驗證 src/models/card.ts
 - [ ] T019 [P] 牌陣欄位模型 src/models/tableau-column.ts
 - [ ] T020 [P] 基礎牌堆模型 src/models/foundation-pile.ts
@@ -65,6 +73,7 @@
 - [ ] T026 儲存服務實作 src/services/storage.ts
 
 ### React 組件
+
 - [ ] T027 [P] 卡片組件與拖放功能 src/components/Card/Card.tsx
 - [ ] T028 [P] 牌陣欄位組件 src/components/TableauColumn/TableauColumn.tsx
 - [ ] T029 [P] 基礎牌堆組件 src/components/FoundationPile/FoundationPile.tsx
@@ -76,12 +85,14 @@
 - [ ] T035 App 根組件與提供者 src/App.tsx
 
 ### 自定義 Hook 和服務
+
 - [ ] T036 [P] useGameState hook src/hooks/useGameState.ts
 - [ ] T037 [P] useDragAndDrop hook src/hooks/useDragAndDrop.ts
 - [ ] T038 [P] useLocalStorage hook src/hooks/useLocalStorage.ts
 - [ ] T039 [P] useGameStatistics hook src/hooks/useGameStatistics.ts
 
 ## 階段 3.4: 整合
+
 - [ ] T040 連接 GameBoard 到遊戲引擎服務
 - [ ] T041 整合 React DnD 與卡片組件
 - [ ] T042 使用 styled-components 新增卡片動畫系統
@@ -90,6 +101,7 @@
 - [ ] T045 新增遊戲狀態持久化和還原
 
 ## 階段 3.5: 品質與效能 (憲章合規)
+
 - [ ] T046 [P] 遊戲驗證規則單元測試 tests/unit/test_validation.test.ts
 - [ ] T047 [P] 卡片模型單元測試 tests/unit/test_models.test.ts
 - [ ] T048 [P] 儲存服務單元測試 tests/unit/test_storage.test.ts
@@ -102,6 +114,7 @@
 - [ ] T055 執行所有 quickstart.md 場景並驗證效能 (<2s 載入, 60fps)
 
 ## 依賴關係
+
 - 設置 (T001-T003) 在所有其他階段之前
 - 測試 (T004-T013) 在實作 (T014-T039) 之前
 - 類型 (T014-T017) 在模型和組件之前
@@ -111,10 +124,11 @@
 - 效能/測試 (T046-T055) 在整合之後
 
 ## 並行執行範例
+
 ```
 # 同時啟動類型定義:
 Task: "卡片類型和枚舉 src/types/card.ts"
-Task: "遊戲狀態類型 src/types/game-state.ts"  
+Task: "遊戲狀態類型 src/types/game-state.ts"
 Task: "位置和移動類型 src/types/position.ts"
 Task: "使用者偏好類型 src/types/preferences.ts"
 
@@ -126,6 +140,7 @@ Task: "庫存牌堆模型 src/models/stock-pile.ts"
 ```
 
 ## 注意事項
+
 - [P] 任務 = 不同檔案，無依賴
 - 實作前驗證測試失敗
 - 遵循 React 最佳實務，使用 Hook 和函式組件
@@ -134,13 +149,13 @@ Task: "庫存牌堆模型 src/models/stock-pile.ts"
 - 確保 WCAG 2.1 AA 無障礙合規
 
 ## 任務生成規則
-*在 main() 執行期間應用*
+
+_在 main() 執行期間應用_
 
 1. **來自合約**:
    - game-engine-interface.ts → T004 合約測試 [P]
    - storage-interface.ts → T005 合約測試 [P]
    - ui-component-interfaces.ts → T006 合約測試 [P]
-   
 2. **來自資料模型**:
    - Card → T018 模型建立任務 [P]
    - TableauColumn → T019 模型建立任務 [P]
@@ -148,7 +163,6 @@ Task: "庫存牌堆模型 src/models/stock-pile.ts"
    - StockPile → T021 模型建立任務 [P]
    - GameState → T022 模型建立任務 [P]
    - Move → T023 模型建立任務 [P]
-   
 3. **來自使用者故事 (quickstart.md)**:
    - 流程 1: 新遊戲設置 → T007 整合測試 [P]
    - 流程 2: 基本卡片移動 → T008 整合測試 [P]
@@ -164,7 +178,8 @@ Task: "庫存牌堆模型 src/models/stock-pile.ts"
    - 依賴關係阻止檔案共享時的並行執行
 
 ## 驗證檢查清單
-*在 main() 回傳前檢查的關卡*
+
+_在 main() 回傳前檢查的關卡_
 
 - [x] 所有合約都有對應的測試 (T004-T006)
 - [x] 所有實體都有模型任務 (T018-T023)

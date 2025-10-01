@@ -1,10 +1,10 @@
-
 # Implementation Plan: Desktop Solitaire Web Application
 
 **Branch**: `001-game-rules-md` | **Date**: 2025-09-25 | **Spec**: [spec.md](./spec.md)
 **Input**: Feature specification from `/specs/001-game-rules-md/spec.md`
 
 ## Execution Flow (/plan command scope)
+
 ```
 1. Load feature spec from Input path
    → If not found: ERROR "No feature spec at {path}"
@@ -27,13 +27,16 @@
 ```
 
 **IMPORTANT**: The /plan command STOPS at step 7. Phases 2-4 are executed by other commands:
+
 - Phase 2: /tasks command creates tasks.md
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
+
 Pure frontend desktop web application for classic solitaire card game with 52-card deck, seven tableau columns, four foundation piles, and stock pile with 1-card/3-card draw modes. Built with React for modern UI, drag-and-drop interactions, local state persistence, and 60fps animations.
 
 ## Technical Context
+
 **Language/Version**: JavaScript ES2022, React 18+  
 **Primary Dependencies**: React, React DnD, CSS-in-JS (styled-components), TypeScript  
 **Storage**: LocalStorage for game state persistence, no backend required  
@@ -45,24 +48,29 @@ Pure frontend desktop web application for classic solitaire card game with 52-ca
 **Scale/Scope**: Single-user game, ~2000 LOC, 10-15 React components
 
 ## Constitution Check
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-**Code Quality Gate**: 
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
+
+**Code Quality Gate**:
+
 - [x] Static analysis tools configured and passing (ESLint, Prettier, TypeScript)
 - [x] Code follows established patterns and conventions (React best practices, hooks patterns)
 - [x] Technical debt is documented and justified (clean architecture planned)
 
-**Testing Gate**: 
+**Testing Gate**:
+
 - [x] Test-first approach planned (tests before implementation)
 - [x] Unit, integration, and e2e test coverage defined (Jest + RTL + Playwright)
 - [x] Performance testing strategy included (React DevTools Profiler, Web Vitals)
 
 **UX Consistency Gate**:
+
 - [x] Design system patterns identified and followed (card game UI conventions)
 - [x] Accessibility requirements (WCAG 2.1 AA) planned (keyboard navigation, ARIA labels)
 - [x] User flow consistency verified across touchpoints (single-page application)
 
 **Performance Gate**:
+
 - [x] Performance benchmarks defined and measurable (60fps animations, <2s load)
 - [x] Resource usage constraints identified (<50MB memory, efficient rendering)
 - [x] Performance testing integrated into plan (automated performance monitoring)
@@ -70,6 +78,7 @@ Pure frontend desktop web application for classic solitaire card game with 52-ca
 ## Project Structure
 
 ### Documentation (this feature)
+
 ```
 specs/[###-feature]/
 ├── plan.md              # This file (/plan command output)
@@ -81,6 +90,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 ```
 # Option 1: Single project (DEFAULT)
 src/
@@ -120,12 +130,14 @@ ios/ or android/
 **Structure Decision**: Option 1 (Single project) - Pure frontend React application
 
 ## Phase 0: Outline & Research
+
 1. **Extract unknowns from Technical Context** above:
    - For each NEEDS CLARIFICATION → research task
    - For each dependency → best practices task
    - For each integration → patterns task
 
 2. **Generate and dispatch research agents**:
+
    ```
    For each unknown in Technical Context:
      Task: "Research {unknown} for {feature context}"
@@ -141,7 +153,8 @@ ios/ or android/
 **Output**: research.md with all NEEDS CLARIFICATION resolved
 
 ## Phase 1: Design & Contracts
-*Prerequisites: research.md complete*
+
+_Prerequisites: research.md complete_
 
 1. **Extract entities from feature spec** → `data-model.md`:
    - Entity name, fields, relationships
@@ -171,29 +184,33 @@ ios/ or android/
    - Keep under 150 lines for token efficiency
    - Output to repository root
 
-**Output**: data-model.md, /contracts/*, failing tests, quickstart.md, agent-specific file
+**Output**: data-model.md, /contracts/\*, failing tests, quickstart.md, agent-specific file
 
 ## Phase 2: Task Planning Approach
-*This section describes what the /tasks command will do - DO NOT execute during /plan*
+
+_This section describes what the /tasks command will do - DO NOT execute during /plan_
 
 **Task Generation Strategy**:
+
 - Load `.specify/templates/tasks-template.md` as base
 - Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
 - Game engine interface → contract test tasks [P]
 - Each entity (Card, GameState, etc.) → model creation task [P]
-- UI component interfaces → component test tasks [P] 
+- UI component interfaces → component test tasks [P]
 - Each user story from quickstart → integration test task
 - Implementation tasks to make all tests pass
 
 **Ordering Strategy**:
+
 - TDD order: Tests before implementation (React Testing Library, Jest)
 - Dependency order: Types → Models → Services → Components → Integration
 - Mark [P] for parallel execution (independent files)
 - React component hierarchy: Card → TableauColumn → FoundationPile → GameBoard
 
 **Estimated Output**: 30-35 numbered, ordered tasks in tasks.md covering:
+
 - TypeScript setup and type definitions (3-4 tasks)
-- Game engine and logic implementation (8-10 tasks) 
+- Game engine and logic implementation (8-10 tasks)
 - React components with tests (12-15 tasks)
 - Integration tests and E2E scenarios (5-6 tasks)
 - Performance optimization and accessibility (3-4 tasks)
@@ -201,25 +218,28 @@ ios/ or android/
 **IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
 
 ## Phase 3+: Future Implementation
-*These phases are beyond the scope of the /plan command*
+
+_These phases are beyond the scope of the /plan command_
 
 **Phase 3**: Task execution (/tasks command creates tasks.md)  
 **Phase 4**: Implementation (execute tasks.md following constitutional principles)  
 **Phase 5**: Validation (run tests, execute quickstart.md, performance validation)
 
 ## Complexity Tracking
-*Fill ONLY if Constitution Check has violations that must be justified*
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+_Fill ONLY if Constitution Check has violations that must be justified_
 
+| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------ | ------------------------------------ |
+| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
 
 ## Progress Tracking
-*This checklist is updated during execution flow*
+
+_This checklist is updated during execution flow_
 
 **Phase Status**:
+
 - [x] Phase 0: Research complete (/plan command)
 - [x] Phase 1: Design complete (/plan command)
 - [x] Phase 2: Task planning complete (/plan command - describe approach only)
@@ -228,10 +248,12 @@ ios/ or android/
 - [ ] Phase 5: Validation passed
 
 **Gate Status**:
+
 - [x] Initial Constitution Check: PASS
 - [x] Post-Design Constitution Check: PASS
 - [x] All NEEDS CLARIFICATION resolved
 - [x] Complexity deviations documented (none required)
 
 ---
-*Based on Constitution v1.0.0 - See `.specify/memory/constitution.md`*
+
+_Based on Constitution v1.0.0 - See `.specify/memory/constitution.md`_

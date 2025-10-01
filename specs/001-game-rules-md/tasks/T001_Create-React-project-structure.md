@@ -5,12 +5,14 @@
 建立 Desktop Solitaire Web Application 的 React 專案架構，使用 Vite 作為建置工具和 TypeScript 作為主要開發語言。此任務需要建立完整的專案結構，包含所有必要的目錄和配置檔案，為後續的開發工作奠定基礎。
 
 根據 constitution.md 的 Code Quality Excellence 原則，此專案結構必須遵循：
+
 - 清晰的命名慣例
 - 可維護的架構模式
 - 適當的目錄組織
 - TypeScript strict mode 配置
 
 專案將採用純前端架構（Pure frontend React application），包含以下核心目錄：
+
 - `src/`: 主要原始碼
 - `tests/`: 測試檔案（contract, integration, unit, e2e）
 - 配置檔案：TypeScript, Vite, ESLint 等
@@ -39,6 +41,7 @@
 ## 測試方式
 
 AI 可透過以下方式驗證任務完成：
+
 1. 執行 `npm run dev` 命令能成功啟動開發伺服器
 2. 確認所有目錄結構已建立且符合規範
 3. 確認 TypeScript 配置正確（strict mode 啟用）
@@ -49,6 +52,7 @@ AI 可透過以下方式驗證任務完成：
 ## AI 使用工具
 
 執行此任務需要以下工具：
+
 - `Bash`: 執行 npm/yarn 命令建立專案
 - `Write`: 建立配置檔案和基本程式碼檔案
 - `Read`: 讀取和驗證已建立的檔案內容

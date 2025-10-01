@@ -34,21 +34,21 @@ function test(name, fn) {
 
 function expect(actual) {
   return {
-    toBe: (expected) => {
+    toBe: expected => {
       if (actual !== expected) {
         throw new Error(`Expected ${expected}, but got ${actual}`);
       }
     },
-    toBeGreaterThanOrEqual: (expected) => {
+    toBeGreaterThanOrEqual: expected => {
       if (actual < expected) {
         throw new Error(`Expected ${actual} to be >= ${expected}`);
       }
     },
-    toHaveProperty: (prop) => {
+    toHaveProperty: prop => {
       if (!actual || !actual.hasOwnProperty(prop)) {
         throw new Error(`Expected object to have property ${prop}`);
       }
-    }
+    },
   };
 }
 
@@ -75,7 +75,7 @@ test('node_modules directory should exist', () => {
 test('React 18+ should be installed', () => {
   expect(packageJson.dependencies).toHaveProperty('react');
   expect(packageJson.dependencies).toHaveProperty('react-dom');
-  
+
   // Check if React version is 18+
   const reactVersion = packageJson.dependencies.react;
   const versionNumber = reactVersion.replace(/[^\d.]/g, '');
@@ -93,25 +93,37 @@ test('styled-components should be installed', () => {
 });
 
 test('TypeScript packages should be installed', () => {
-  const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+  const allDeps = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  };
   expect(allDeps).toHaveProperty('typescript');
   expect(allDeps).toHaveProperty('@types/react');
   expect(allDeps).toHaveProperty('@types/react-dom');
 });
 
 test('Testing packages should be installed', () => {
-  const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+  const allDeps = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  };
   expect(allDeps).toHaveProperty('@testing-library/react');
   expect(allDeps).toHaveProperty('@testing-library/jest-dom');
 });
 
 test('Playwright should be installed', () => {
-  const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+  const allDeps = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  };
   expect(allDeps).toHaveProperty('@playwright/test');
 });
 
 test('Development tools should be installed', () => {
-  const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+  const allDeps = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  };
   expect(allDeps).toHaveProperty('@types/styled-components');
   expect(allDeps).toHaveProperty('@vitejs/plugin-react');
 });
@@ -126,7 +138,7 @@ test('Package installation directories should exist in node_modules', () => {
     'typescript',
     '@types',
     '@testing-library',
-    '@playwright'
+    '@playwright',
   ];
 
   requiredPackages.forEach(pkg => {
