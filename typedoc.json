@@ -1,0 +1,23 @@
+{
+  "entryPointStrategy": "expand",
+  "entryPoints": [
+    "src/models",
+    "src/services", 
+    "src/types",
+    "src/hooks",
+    "src/components"
+  ],
+  "exclude": [
+    "**/specs/**",
+    "**/tests/**", 
+    "**/*.test.*",
+    "**/setupTests.ts",
+    "**/main.tsx",
+    "**/App.tsx",
+    "**/*.css"
+  ],
+  "out": "docs",
+  "name": "whyPatience Documentation",
+  "readme": "none",
+  "skipErrorChecking": true
+}

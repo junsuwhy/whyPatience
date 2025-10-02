@@ -70,15 +70,15 @@
 - [x] T023 [P] Move model and history in src/models/move.ts
 - [x] T024 Game engine core logic in src/services/game-engine.ts
 - [x] T025 Game validation rules in src/services/game-validation.ts
-- [ ] T026 Storage service implementation in src/services/storage.ts
+- [x] T026 Storage service implementation in src/services/storage.ts
 
 ### React Components
 
-- [ ] T027 [P] Card component with drag/drop in src/components/Card/Card.tsx
-- [ ] T028 [P] TableauColumn component in src/components/TableauColumn/TableauColumn.tsx
-- [ ] T029 [P] FoundationPile component in src/components/FoundationPile/FoundationPile.tsx
-- [ ] T030 [P] StockPile component in src/components/StockPile/StockPile.tsx
-- [ ] T031 [P] GameControls component in src/components/GameControls/GameControls.tsx
+- [x] T027 [P] Card component with drag/drop in src/components/Card/Card.tsx
+- [x] T028 [P] TableauColumn component in src/components/TableauColumn/TableauColumn.tsx
+- [x] T029 [P] FoundationPile component in src/components/FoundationPile/FoundationPile.tsx
+- [x] T030 [P] StockPile component in src/components/StockPile/StockPile.tsx
+- [x] T031 [P] GameControls component in src/components/GameControls/GameControls.tsx
 - [ ] T032 [P] GameStatistics component in src/components/GameStatistics/GameStatistics.tsx
 - [ ] T033 [P] SettingsModal component in src/components/SettingsModal/SettingsModal.tsx
 - [ ] T034 GameBoard main component in src/components/GameBoard/GameBoard.tsx

@@ -109,3 +109,23 @@ export {
   createRectangle,
   interpolatePosition,
 } from './position';
+
+// Export storage types and interfaces
+export type {
+  StorageContract,
+  StorageInfo,
+  StorageError,
+  StorageConfig,
+  StorageEvents,
+  DataMigration,
+  BackupContract,
+  BackupData,
+  BackupMetadata,
+} from '../../specs/001-game-rules-md/contracts/storage-interface';
+
+// Export storage service
+export {
+  StorageService,
+  StorageServiceError,
+  storageService,
+} from '../services/storage';

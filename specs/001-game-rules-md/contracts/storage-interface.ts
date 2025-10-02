@@ -3,6 +3,8 @@
  * Defines the interface for local storage operations
  */
 
+import { GameState, UserPreferences, OverallStatistics } from '../../../src/types';
+
 export interface StorageContract {
   // Game state persistence
   saveGameState(gameState: GameState): Promise<boolean>;

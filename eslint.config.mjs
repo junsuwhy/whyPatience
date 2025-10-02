@@ -23,6 +23,10 @@ export default [
         window: 'readonly',
         document: 'readonly',
         HTMLElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        Event: 'readonly',
+        KeyboardEvent: 'readonly',
+        MouseEvent: 'readonly',
       },
     },
     plugins: {

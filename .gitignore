@@ -5,3 +5,4 @@ specs/**/ignore/
 node_modules/
 dist/
 build/
+docs/
