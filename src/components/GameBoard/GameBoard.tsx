@@ -358,7 +358,14 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
             break;
         }
       },
-      [isDisabled, handleNewGame, handleRestart, handleUndo, handleFocusNavigation, handleFocusedElementAction]
+      [
+        isDisabled,
+        handleNewGame,
+        handleRestart,
+        handleUndo,
+        handleFocusNavigation,
+        handleFocusedElementAction,
+      ]
     );
 
     /**

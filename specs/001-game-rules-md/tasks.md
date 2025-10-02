@@ -82,7 +82,7 @@
 - [x] T032 [P] GameStatistics component in src/components/GameStatistics/GameStatistics.tsx
 - [x] T033 [P] SettingsModal component in src/components/SettingsModal/SettingsModal.tsx
 - [x] T034 GameBoard main component in src/components/GameBoard/GameBoard.tsx
-- [ ] T035 App root component with providers in src/App.tsx
+- [x] T035 App root component with providers in src/App.tsx
 
 ### Custom Hooks and Services
 

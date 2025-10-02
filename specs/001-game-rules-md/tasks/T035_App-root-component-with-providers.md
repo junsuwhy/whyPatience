@@ -15,24 +15,24 @@
 
 ## 工項 tasks
 
-- [ ] 審查目前 `src/App.tsx` 現有簡易占位內容，規劃新版結構
-- [ ] 新增 `src/providers/`（若僅預留則可暫不建立實作，保留註解標記 TODO）
-- [ ] 在 `App.tsx` 中整合（或暫時占位）DndProvider（React DnD）結構（若套件已存在）
-- [ ] 預留 GameStateProvider（對應 T036 將實作的 hook/context）註解占位
-- [ ] 預留 StatisticsProvider（或以 useGameStatistics 啟動點註解）
-- [ ] 建立無障礙 Skip Link：`<a href="#main" className="skip-link">跳到主要內容</a>`
-- [ ] 追加 `<header>` `<main id="main">` `<footer>` 語意結構與 ARIA 屬性
-- [ ] 將標題 H1 維持："Desktop Solitaire" 並加入 aria-label 強化描述
-- [ ] 將 GameBoard 元件導入並置於 `<main>` 中；若尚無互動狀態來源，以註解標記 TODO: connect game state (T040 之後)
-- [ ] 加入基本 styled-components 容器（若尚未建立主題，僅內聯或占位）
-- [ ] 加入錯誤邊界（ErrorBoundary 占位：以註解 或 簡易 try/catch 包裹）
-- [ ] 實作初步焦點管理（App 載入後將焦點送往主標題或主內容）
-- [ ] 在檔案頂部加入任務編號與目的註解（利於追蹤）
-- [ ] 撰寫對應測試檔 `tests/integration/T035_App-root-component-with-providers.test.tsx`
-- [ ] 測試：渲染後應出現：Skip link / H1 / GameBoard 容器占位 / landmark roles
-- [ ] 測試：模擬 Tab 流程，第一個可聚焦元素為 Skip link
-- [ ] 若 DnD Provider 無法即時導入（依賴尚未完成）→ 測試中以條件跳過或 mock
-- [ ] 更新 `specs/001-game-rules-md/tasks.md` 將 T035 勾選（人工或後續流程）
+- [x] 審查目前 `src/App.tsx` 現有簡易占位內容，規劃新版結構
+- [x] 新增 `src/providers/`（若僅預留則可暫不建立實作，保留註解標記 TODO）
+- [x] 在 `App.tsx` 中整合（或暫時占位）DndProvider（React DnD）結構（若套件已存在）
+- [x] 預留 GameStateProvider（對應 T036 將實作的 hook/context）註解占位
+- [x] 預留 StatisticsProvider（或以 useGameStatistics 啟動點註解）
+- [x] 建立無障礙 Skip Link：`<a href="#main" className="skip-link">跳到主要內容</a>`
+- [x] 追加 `<header>` `<main id="main">` `<footer>` 語意結構與 ARIA 屬性
+- [x] 將標題 H1 維持："Desktop Solitaire" 並加入 aria-label 強化描述
+- [x] 將 GameBoard 元件導入並置於 `<main>` 中；若尚無互動狀態來源，以註解標記 TODO: connect game state (T040 之後)
+- [x] 加入基本 styled-components 容器（若尚未建立主題，僅內聯或占位）
+- [x] 加入錯誤邊界（ErrorBoundary 占位：以註解 或 簡易 try/catch 包裹）
+- [x] 實作初步焦點管理（App 載入後將焦點送往主標題或主內容）
+- [x] 在檔案頂部加入任務編號與目的註解（利於追蹤）
+- [x] 撰寫對應測試檔 `tests/integration/T035_App-root-component-with-providers.test.tsx`
+- [?] 測試：渲染後應出現：Skip link / H1 / GameBoard 容器占位 / landmark roles
+- [?] 測試：模擬 Tab 流程，第一個可聚焦元素為 Skip link
+- [?] 若 DnD Provider 無法即時導入（依賴尚未完成）→ 測試中以條件跳過或 mock
+- [x] 更新 `specs/001-game-rules-md/tasks.md` 將 T035 勾選（人工或後續流程）
 
 ## 測試方式
 
