@@ -5,6 +5,7 @@
 實作 FoundationPile 組件，這是 Desktop Solitaire 遊戲中的基礎牌堆組件。根據 constitution.md 的 Test-Driven Development 原則，此任務需要實作一個可接受卡牌拖放、顯示牌堆狀態、並遵循遊戲規則的 React 組件。
 
 此組件需要：
+
 - 接受卡牌的拖放操作 (React DnD)
 - 顯示當前牌堆的頂牌
 - 根據遊戲規則驗證卡牌放置的合法性 (同花色、遞增順序)
@@ -55,6 +56,7 @@ npm run typecheck
 - **Grep**: 搜尋程式碼中的特定模式
 
 需要的檔案參考：
+
 - `src/types/index.ts` - 類型定義
 - `src/models/foundation-pile.ts` - FoundationPile model
 - `src/components/Card/Card.tsx` - Card 組件參考

@@ -15,20 +15,23 @@ describe('T017 User Preferences Types', () => {
     const testTheme = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       // Check if file exists
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       // Check if file contains Theme type
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('Theme')) {
         throw new Error('Theme type not found in preferences.ts');
       }
     };
-    
+
     expect(testTheme).toThrow('preferences.ts file does not exist');
   });
 
@@ -36,18 +39,21 @@ describe('T017 User Preferences Types', () => {
     const testCardStyle = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('CardStyle')) {
         throw new Error('CardStyle type not found');
       }
     };
-    
+
     expect(testCardStyle).toThrow('preferences.ts file does not exist');
   });
 
@@ -55,18 +61,21 @@ describe('T017 User Preferences Types', () => {
     const testDrawMode = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('DrawMode')) {
         throw new Error('DrawMode type not found');
       }
     };
-    
+
     expect(testDrawMode).toThrow('preferences.ts file does not exist');
   });
 
@@ -74,18 +83,21 @@ describe('T017 User Preferences Types', () => {
     const testAnimationSpeed = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('AnimationSpeed')) {
         throw new Error('AnimationSpeed type not found');
       }
     };
-    
+
     expect(testAnimationSpeed).toThrow('preferences.ts file does not exist');
   });
 
@@ -93,18 +105,21 @@ describe('T017 User Preferences Types', () => {
     const testSoundPreferences = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('SoundPreferences')) {
         throw new Error('SoundPreferences interface not found');
       }
     };
-    
+
     expect(testSoundPreferences).toThrow('preferences.ts file does not exist');
   });
 
@@ -112,56 +127,75 @@ describe('T017 User Preferences Types', () => {
     const testGameplayPreferences = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('GameplayPreferences')) {
         throw new Error('GameplayPreferences interface not found');
       }
     };
-    
-    expect(testGameplayPreferences).toThrow('preferences.ts file does not exist');
+
+    expect(testGameplayPreferences).toThrow(
+      'preferences.ts file does not exist'
+    );
   });
 
   it('should fail: DisplayPreferences interface not implemented', () => {
     const testDisplayPreferences = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('DisplayPreferences')) {
         throw new Error('DisplayPreferences interface not found');
       }
     };
-    
-    expect(testDisplayPreferences).toThrow('preferences.ts file does not exist');
+
+    expect(testDisplayPreferences).toThrow(
+      'preferences.ts file does not exist'
+    );
   });
 
   it('should fail: Enhanced UserPreferences interface not implemented', () => {
     const testUserPreferences = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
-      if (!content.includes('sound:') || !content.includes('gameplay:') || !content.includes('display:')) {
-        throw new Error('Enhanced UserPreferences interface with sound, gameplay, display properties not found');
+      if (
+        !content.includes('sound:') ||
+        !content.includes('gameplay:') ||
+        !content.includes('display:')
+      ) {
+        throw new Error(
+          'Enhanced UserPreferences interface with sound, gameplay, display properties not found'
+        );
       }
     };
-    
+
     expect(testUserPreferences).toThrow('preferences.ts file does not exist');
   });
 
@@ -169,18 +203,21 @@ describe('T017 User Preferences Types', () => {
     const testPreferencesState = () => {
       const fs = require('fs');
       const path = require('path');
-      const preferencesPath = path.join(__dirname, '../../src/types/preferences.ts');
-      
+      const preferencesPath = path.join(
+        __dirname,
+        '../../src/types/preferences.ts'
+      );
+
       if (!fs.existsSync(preferencesPath)) {
         throw new Error('preferences.ts file does not exist');
       }
-      
+
       const content = fs.readFileSync(preferencesPath, 'utf8');
       if (!content.includes('PreferencesState')) {
         throw new Error('PreferencesState interface not found');
       }
     };
-    
+
     expect(testPreferencesState).toThrow('preferences.ts file does not exist');
   });
 });

@@ -3,7 +3,11 @@
  * Defines the interface for local storage operations
  */
 
-import { GameState, UserPreferences, OverallStatistics } from '../../../src/types';
+import {
+  GameState,
+  UserPreferences,
+  OverallStatistics,
+} from '../../../src/types';
 
 export interface StorageContract {
   // Game state persistence

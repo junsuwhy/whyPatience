@@ -79,9 +79,9 @@
 - [x] T029 [P] FoundationPile component in src/components/FoundationPile/FoundationPile.tsx
 - [x] T030 [P] StockPile component in src/components/StockPile/StockPile.tsx
 - [x] T031 [P] GameControls component in src/components/GameControls/GameControls.tsx
-- [ ] T032 [P] GameStatistics component in src/components/GameStatistics/GameStatistics.tsx
-- [ ] T033 [P] SettingsModal component in src/components/SettingsModal/SettingsModal.tsx
-- [ ] T034 GameBoard main component in src/components/GameBoard/GameBoard.tsx
+- [x] T032 [P] GameStatistics component in src/components/GameStatistics/GameStatistics.tsx
+- [x] T033 [P] SettingsModal component in src/components/SettingsModal/SettingsModal.tsx
+- [x] T034 GameBoard main component in src/components/GameBoard/GameBoard.tsx
 - [ ] T035 App root component with providers in src/App.tsx
 
 ### Custom Hooks and Services

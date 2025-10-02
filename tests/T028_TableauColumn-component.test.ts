@@ -8,11 +8,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('T028 TableauColumn Component', () => {
-  const tableauColumnComponentPath = path.join(process.cwd(), 'src/components/TableauColumn/TableauColumn.tsx');
-  const tableauColumnStylesPath = path.join(process.cwd(), 'src/components/TableauColumn/TableauColumn.styled.ts');
-  const tableauColumnTypesPath = path.join(process.cwd(), 'src/components/TableauColumn/TableauColumn.types.ts');
-  const tableauColumnIndexPath = path.join(process.cwd(), 'src/components/TableauColumn/index.ts');
-  
+  const tableauColumnComponentPath = path.join(
+    process.cwd(),
+    'src/components/TableauColumn/TableauColumn.tsx'
+  );
+  const tableauColumnStylesPath = path.join(
+    process.cwd(),
+    'src/components/TableauColumn/TableauColumn.styled.ts'
+  );
+  const tableauColumnTypesPath = path.join(
+    process.cwd(),
+    'src/components/TableauColumn/TableauColumn.types.ts'
+  );
+  const tableauColumnIndexPath = path.join(
+    process.cwd(),
+    'src/components/TableauColumn/index.ts'
+  );
+
   beforeAll(() => {
     console.log('🧪 Testing T028 - TableauColumn Component');
     console.log('📁 Expected component path:', tableauColumnComponentPath);
@@ -23,7 +35,10 @@ describe('T028 TableauColumn Component', () => {
 
   describe('File Structure', () => {
     it('should have TableauColumn/ directory structure', () => {
-      const tableauColumnDir = path.join(process.cwd(), 'src/components/TableauColumn/');
+      const tableauColumnDir = path.join(
+        process.cwd(),
+        'src/components/TableauColumn/'
+      );
       expect(fs.existsSync(tableauColumnDir)).toBe(true);
     });
 
@@ -99,7 +114,10 @@ describe('T028 TableauColumn Component', () => {
           expect(TableauColumn).toBeDefined();
         } catch (error) {
           // Expected to fail in red state
-          console.warn('TableauColumn component props validation failed:', error);
+          console.warn(
+            'TableauColumn component props validation failed:',
+            error
+          );
         }
       }
     });
@@ -107,7 +125,10 @@ describe('T028 TableauColumn Component', () => {
     it('should accept column index prop', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('columnIndex');
         } catch (error) {
           // Expected to fail in red state
@@ -137,7 +158,10 @@ describe('T028 TableauColumn Component', () => {
     it('should implement cascade effect styling', async () => {
       if (fs.existsSync(tableauColumnStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(tableauColumnStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            tableauColumnStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('cascade');
         } catch (error) {
           // Expected to fail in red state
@@ -152,7 +176,10 @@ describe('T028 TableauColumn Component', () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
           // Test will check for React DnD hooks usage
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('useDrop');
         } catch (error) {
           // Expected to fail in red state
@@ -164,7 +191,10 @@ describe('T028 TableauColumn Component', () => {
     it('should validate drop rules according to solitaire game rules', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('canDrop');
           expect(tableauColumnContent).toContain('isValidMove');
         } catch (error) {
@@ -177,7 +207,10 @@ describe('T028 TableauColumn Component', () => {
     it('should handle card stack movement', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('moveCards');
         } catch (error) {
           // Expected to fail in red state
@@ -191,7 +224,10 @@ describe('T028 TableauColumn Component', () => {
     it('should render empty column placeholder', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('EmptySlot');
         } catch (error) {
           // Expected to fail in red state
@@ -203,7 +239,10 @@ describe('T028 TableauColumn Component', () => {
     it('should render cards with cascade effect', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('cascade');
           expect(tableauColumnContent).toContain('offset');
         } catch (error) {
@@ -216,7 +255,10 @@ describe('T028 TableauColumn Component', () => {
     it('should handle face-down cards properly', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('faceUp');
         } catch (error) {
           // Expected to fail in red state
@@ -230,7 +272,10 @@ describe('T028 TableauColumn Component', () => {
     it('should implement ARIA labels for column', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('aria-label');
           expect(tableauColumnContent).toContain('Tableau column');
         } catch (error) {
@@ -243,7 +288,10 @@ describe('T028 TableauColumn Component', () => {
     it('should support keyboard navigation', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('onKeyDown');
           expect(tableauColumnContent).toContain('tabIndex');
         } catch (error) {
@@ -256,7 +304,10 @@ describe('T028 TableauColumn Component', () => {
     it('should support focus management', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('focus');
         } catch (error) {
           // Expected to fail in red state
@@ -270,7 +321,10 @@ describe('T028 TableauColumn Component', () => {
     it('should use React.memo for optimization', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('React.memo');
         } catch (error) {
           // Expected to fail in red state
@@ -282,7 +336,10 @@ describe('T028 TableauColumn Component', () => {
     it('should optimize card rendering for 60fps target', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('useMemo');
         } catch (error) {
           // Expected to fail in red state
@@ -296,7 +353,10 @@ describe('T028 TableauColumn Component', () => {
     it('should implement hover animations', async () => {
       if (fs.existsSync(tableauColumnStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(tableauColumnStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            tableauColumnStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('hover');
         } catch (error) {
           // Expected to fail in red state
@@ -308,7 +368,10 @@ describe('T028 TableauColumn Component', () => {
     it('should implement drop zone animations', async () => {
       if (fs.existsSync(tableauColumnStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(tableauColumnStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            tableauColumnStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('transition');
           expect(stylesContent).toContain('canDrop');
         } catch (error) {
@@ -321,7 +384,10 @@ describe('T028 TableauColumn Component', () => {
     it('should support smooth card placement animations', async () => {
       if (fs.existsSync(tableauColumnStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(tableauColumnStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            tableauColumnStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('animation');
         } catch (error) {
           // Expected to fail in red state
@@ -335,7 +401,10 @@ describe('T028 TableauColumn Component', () => {
     it('should validate King-only empty column rule', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('KING');
         } catch (error) {
           // Expected to fail in red state
@@ -347,7 +416,10 @@ describe('T028 TableauColumn Component', () => {
     it('should validate alternating color sequence', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('isOppositeColor');
         } catch (error) {
           // Expected to fail in red state
@@ -359,7 +431,10 @@ describe('T028 TableauColumn Component', () => {
     it('should validate descending rank sequence', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('isDescending');
         } catch (error) {
           // Expected to fail in red state
@@ -373,7 +448,10 @@ describe('T028 TableauColumn Component', () => {
     it('should handle card click events', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('onClick');
         } catch (error) {
           // Expected to fail in red state
@@ -385,7 +463,10 @@ describe('T028 TableauColumn Component', () => {
     it('should handle card reveal events', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('onReveal');
         } catch (error) {
           // Expected to fail in red state
@@ -399,7 +480,10 @@ describe('T028 TableauColumn Component', () => {
     it('should use strict TypeScript types', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
           expect(tableauColumnContent).toContain('interface');
           expect(tableauColumnContent).toContain('FC<');
         } catch (error) {
@@ -412,8 +496,11 @@ describe('T028 TableauColumn Component', () => {
     it('should import types from types module', async () => {
       if (fs.existsSync(tableauColumnComponentPath)) {
         try {
-          const tableauColumnContent = fs.readFileSync(tableauColumnComponentPath, 'utf8');
-          expect(tableauColumnContent).toContain('from \'../../types\'');
+          const tableauColumnContent = fs.readFileSync(
+            tableauColumnComponentPath,
+            'utf8'
+          );
+          expect(tableauColumnContent).toContain("from '../../types'");
         } catch (error) {
           // Expected to fail in red state
           expect(error).toBeDefined();
@@ -436,8 +523,14 @@ describe('T028 TableauColumn Component', () => {
 
   afterAll(() => {
     console.log('✅ T028 test execution completed');
-    console.log('⚠️  This test should initially FAIL (red state) before implementation');
-    console.log('📋 Component should support: cascade display, drag/drop validation, game rules, ARIA labels, 60fps animations');
-    console.log('🎯 Key requirements: King-only empty columns, alternating colors, descending ranks');
+    console.log(
+      '⚠️  This test should initially FAIL (red state) before implementation'
+    );
+    console.log(
+      '📋 Component should support: cascade display, drag/drop validation, game rules, ARIA labels, 60fps animations'
+    );
+    console.log(
+      '🎯 Key requirements: King-only empty columns, alternating colors, descending ranks'
+    );
   });
 });

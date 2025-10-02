@@ -8,8 +8,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('T026 Storage Service Implementation', () => {
-  const storageServicePath = path.join(process.cwd(), 'src/services/storage.ts');
-  
+  const storageServicePath = path.join(
+    process.cwd(),
+    'src/services/storage.ts'
+  );
+
   beforeAll(() => {
     console.log('🧪 Testing T026 - Storage Service Implementation');
     console.log('📁 Expected file path:', storageServicePath);
@@ -95,7 +98,7 @@ describe('T026 Storage Service Implementation', () => {
 
         const result = storageInstance.saveGameState(mockGameState);
         expect(result).toBeInstanceOf(Promise);
-        
+
         try {
           await result;
         } catch (error) {
@@ -110,7 +113,7 @@ describe('T026 Storage Service Implementation', () => {
       if (storageInstance) {
         const result = storageInstance.loadGameState();
         expect(result).toBeInstanceOf(Promise);
-        
+
         try {
           await result;
         } catch (error) {
@@ -125,7 +128,7 @@ describe('T026 Storage Service Implementation', () => {
       if (storageInstance) {
         const result = storageInstance.clearGameState();
         expect(result).toBeInstanceOf(Promise);
-        
+
         try {
           await result;
         } catch (error) {
@@ -140,7 +143,7 @@ describe('T026 Storage Service Implementation', () => {
       if (storageInstance) {
         const result = storageInstance.hasStoredGame();
         expect(result).toBeInstanceOf(Promise);
-        
+
         try {
           await result;
         } catch (error) {
@@ -173,7 +176,7 @@ describe('T026 Storage Service Implementation', () => {
     it('should be compatible with GameState types', async () => {
       // This test verifies that the storage service properly integrates with type definitions
       const typesIndexPath = path.join(process.cwd(), 'src/types/index.ts');
-      
+
       if (fs.existsSync(typesIndexPath)) {
         try {
           const typesModule = await import(typesIndexPath);
@@ -188,6 +191,8 @@ describe('T026 Storage Service Implementation', () => {
 
   afterAll(() => {
     console.log('✅ T026 test execution completed');
-    console.log('⚠️  This test should initially FAIL (red state) before implementation');
+    console.log(
+      '⚠️  This test should initially FAIL (red state) before implementation'
+    );
   });
 });

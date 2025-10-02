@@ -5,8 +5,9 @@
 實作 GameStatistics 組件，用於顯示遊戲統計資訊如遊戲進行時間、移動次數、得分等資訊。此組件將整合 useGameStatistics hook 來獲取統計數據，並以清晰的視覺方式呈現給使用者。需要支援即時更新統計資訊並提供良好的使用者體驗。
 
 根據 Constitution 原則，此組件需要：
+
 - 遵循 Code Quality Excellence：清晰的命名、可維護的架構
-- 符合 User Experience Consistency：一致的設計模式和互動方式  
+- 符合 User Experience Consistency：一致的設計模式和互動方式
 - 滿足 Performance Standards：高效的渲染和 60fps 動畫表現
 - 實作 Test-Driven Development：先寫測試再實作
 
@@ -53,6 +54,7 @@ npm test -- GameStatistics
 ## AI 使用工具
 
 本任務需要使用以下工具：
+
 - **Write**: 建立組件檔案和樣式檔案
 - **Edit**: 修改現有檔案內容
 - **Read**: 讀取相關型別定義和 hook 實作

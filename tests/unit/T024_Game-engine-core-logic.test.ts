@@ -33,7 +33,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
     it('should implement GameEngineContract interface', () => {
       expect(gameEngine).toBeDefined();
       expect(gameEngine).toBeInstanceOf(GameEngine);
-      
+
       // Check that it implements the contract interface
       const contract: GameEngineContract = gameEngine;
       expect(contract).toBeDefined();
@@ -42,7 +42,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
     it('should have all required methods from GameEngineContract', () => {
       const requiredMethods = [
         'initializeGame',
-        'dealCards', 
+        'dealCards',
         'resetGame',
         'moveCards',
         'undoMove',
@@ -67,7 +67,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
   describe('initializeGame() method', () => {
     it('should initialize a new game with ONE card draw mode', () => {
       const gameState = gameEngine.initializeGame(DrawMode.ONE);
-      
+
       expect(gameState).toBeDefined();
       expect(gameState.drawMode).toBe(DrawMode.ONE);
       expect(gameState.tableau).toHaveLength(7);
@@ -82,7 +82,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     it('should initialize a new game with THREE card draw mode', () => {
       const gameState = gameEngine.initializeGame(DrawMode.THREE);
-      
+
       expect(gameState).toBeDefined();
       expect(gameState.drawMode).toBe(DrawMode.THREE);
       expect(gameState.tableau).toHaveLength(7);
@@ -91,15 +91,16 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     it('should properly distribute cards to tableau columns', () => {
       const gameState = gameEngine.initializeGame(DrawMode.ONE);
-      
+
       // Verify tableau column card counts: 1,2,3,4,5,6,7
       for (let i = 0; i < 7; i++) {
         expect(gameState.tableau[i].cards).toHaveLength(i + 1);
-        
+
         // Only the top card should be face up
-        const topCard = gameState.tableau[i].cards[gameState.tableau[i].cards.length - 1];
+        const topCard =
+          gameState.tableau[i].cards[gameState.tableau[i].cards.length - 1];
         expect(topCard.faceUp).toBe(true);
-        
+
         // All other cards should be face down
         for (let j = 0; j < gameState.tableau[i].cards.length - 1; j++) {
           expect(gameState.tableau[i].cards[j].faceUp).toBe(false);
@@ -109,7 +110,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     it('should initialize empty foundations', () => {
       const gameState = gameEngine.initializeGame(DrawMode.ONE);
-      
+
       gameState.foundations.forEach(foundation => {
         expect(foundation.cards).toEqual([]);
         expect(foundation.suit).toBeDefined();
@@ -118,7 +119,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     it('should place remaining cards in stock pile', () => {
       const gameState = gameEngine.initializeGame(DrawMode.ONE);
-      
+
       // Total cards: 52
       // Tableau cards: 1+2+3+4+5+6+7 = 28
       // Stock cards: 52-28 = 24
@@ -144,7 +145,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
     it('should validate move from tableau to foundation', () => {
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'foundation', index: 0 };
-      
+
       const isValid = gameEngine.isValidMove([mockCard], from, to);
       expect(typeof isValid).toBe('boolean');
     });
@@ -156,10 +157,10 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
         rank: Rank.KING,
         faceUp: true,
       };
-      
+
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'tableau', index: 1 };
-      
+
       const isValid = gameEngine.isValidMove([redKing], from, to);
       expect(typeof isValid).toBe('boolean');
     });
@@ -167,7 +168,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
     it('should invalidate moves to invalid positions', () => {
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'tableau', index: 10 }; // Invalid index
-      
+
       const isValid = gameEngine.isValidMove([mockCard], from, to);
       expect(isValid).toBe(false);
     });
@@ -179,15 +180,16 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     beforeEach(() => {
       gameState = gameEngine.initializeGame(DrawMode.ONE);
-      mockCard = gameState.tableau[0].cards[gameState.tableau[0].cards.length - 1];
+      mockCard =
+        gameState.tableau[0].cards[gameState.tableau[0].cards.length - 1];
     });
 
     it('should execute a valid move and return MoveResult', () => {
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'foundation', index: 0 };
-      
+
       const result: MoveResult = gameEngine.moveCards([mockCard], from, to);
-      
+
       expect(result).toBeDefined();
       expect(result.success).toBeDefined();
       expect(result.newState).toBeDefined();
@@ -197,9 +199,9 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
     it('should return failed MoveResult for invalid moves', () => {
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'tableau', index: 10 }; // Invalid index
-      
+
       const result: MoveResult = gameEngine.moveCards([mockCard], from, to);
-      
+
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();
     });
@@ -208,7 +210,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
   describe('undoLastMove() method', () => {
     it('should return UndoResult structure', () => {
       const result: UndoResult = gameEngine.undoMove();
-      
+
       expect(result).toBeDefined();
       expect(result.success).toBeDefined();
       expect(result.newState).toBeDefined();
@@ -217,7 +219,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     it('should fail when no moves to undo', () => {
       const result: UndoResult = gameEngine.undoMove();
-      
+
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();
     });
@@ -232,7 +234,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
 
     it('should draw cards from stock pile', () => {
       const result: DrawResult = gameEngine.drawFromStock();
-      
+
       expect(result).toBeDefined();
       expect(result.success).toBeDefined();
       expect(result.drawnCards).toBeDefined();
@@ -270,9 +272,10 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
     });
 
     it('should get valid moves for a card', () => {
-      const topCard = gameState.tableau[0].cards[gameState.tableau[0].cards.length - 1];
+      const topCard =
+        gameState.tableau[0].cards[gameState.tableau[0].cards.length - 1];
       const validMoves = gameEngine.getValidMoves(topCard);
-      
+
       expect(Array.isArray(validMoves)).toBe(true);
       validMoves.forEach(position => {
         expect(position.type).toBeDefined();
@@ -289,7 +292,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
   describe('game statistics', () => {
     it('should get game statistics', () => {
       const stats: GameStatistics = gameEngine.getGameStatistics();
-      
+
       expect(stats).toBeDefined();
       expect(typeof stats.gamesPlayed).toBe('number');
       expect(typeof stats.gamesWon).toBe('number');
@@ -309,7 +312,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
         to: { type: 'foundation', index: 0 },
         timestamp: Date.now(),
       };
-      
+
       expect(() => gameEngine.updateStatistics(mockMove)).not.toThrow();
     });
   });
@@ -319,7 +322,7 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
       const startTime = performance.now();
       gameEngine.initializeGame(DrawMode.ONE);
       const endTime = performance.now();
-      
+
       // Should initialize quickly (< 16ms for 60fps requirement)
       expect(endTime - startTime).toBeLessThan(16);
     });
@@ -329,11 +332,11 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
       const card = gameState.tableau[0].cards[0];
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'foundation', index: 0 };
-      
+
       const startTime = performance.now();
       gameEngine.isValidMove([card], from, to);
       const endTime = performance.now();
-      
+
       // Should validate quickly (< 1ms)
       expect(endTime - startTime).toBeLessThan(1);
     });
@@ -344,8 +347,10 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
       const invalidCard = null as any;
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'foundation', index: 0 };
-      
-      expect(() => gameEngine.isValidMove([invalidCard], from, to)).not.toThrow();
+
+      expect(() =>
+        gameEngine.isValidMove([invalidCard], from, to)
+      ).not.toThrow();
       expect(() => gameEngine.moveCards([invalidCard], from, to)).not.toThrow();
     });
 
@@ -357,15 +362,19 @@ describe('T024: GameEngine Core Logic Unit Tests', () => {
         faceUp: true,
       };
       const invalidPosition = null as any;
-      
-      expect(() => gameEngine.isValidMove([card], invalidPosition, invalidPosition)).not.toThrow();
-      expect(() => gameEngine.moveCards([card], invalidPosition, invalidPosition)).not.toThrow();
+
+      expect(() =>
+        gameEngine.isValidMove([card], invalidPosition, invalidPosition)
+      ).not.toThrow();
+      expect(() =>
+        gameEngine.moveCards([card], invalidPosition, invalidPosition)
+      ).not.toThrow();
     });
 
     it('should handle empty card arrays gracefully', () => {
       const from: Position = { type: 'tableau', index: 0 };
       const to: Position = { type: 'foundation', index: 0 };
-      
+
       expect(() => gameEngine.isValidMove([], from, to)).not.toThrow();
       expect(() => gameEngine.moveCards([], from, to)).not.toThrow();
     });

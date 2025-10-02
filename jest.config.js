@@ -12,7 +12,7 @@ export default {
     }],
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(react-dnd|react-dnd-html5-backend|@react-dnd)/)',
+    'node_modules/(?!(react-dnd|react-dnd-html5-backend|@react-dnd|dnd-core)/)',
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

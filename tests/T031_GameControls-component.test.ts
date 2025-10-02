@@ -8,11 +8,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('T031 GameControls Component', () => {
-  const gameControlsComponentPath = path.join(process.cwd(), 'src/components/GameControls/GameControls.tsx');
-  const gameControlsStylesPath = path.join(process.cwd(), 'src/components/GameControls/GameControls.styles.ts');
-  const gameControlsTypesPath = path.join(process.cwd(), 'src/components/GameControls/GameControls.types.ts');
-  const gameControlsIndexPath = path.join(process.cwd(), 'src/components/GameControls/index.ts');
-  
+  const gameControlsComponentPath = path.join(
+    process.cwd(),
+    'src/components/GameControls/GameControls.tsx'
+  );
+  const gameControlsStylesPath = path.join(
+    process.cwd(),
+    'src/components/GameControls/GameControls.styles.ts'
+  );
+  const gameControlsTypesPath = path.join(
+    process.cwd(),
+    'src/components/GameControls/GameControls.types.ts'
+  );
+  const gameControlsIndexPath = path.join(
+    process.cwd(),
+    'src/components/GameControls/index.ts'
+  );
+
   beforeAll(() => {
     console.log('🧪 Testing T031 - GameControls Component');
     console.log('📁 Expected component path:', gameControlsComponentPath);
@@ -23,7 +35,10 @@ describe('T031 GameControls Component', () => {
 
   describe('File Structure', () => {
     it('should have GameControls/ directory structure', () => {
-      const gameControlsDir = path.join(process.cwd(), 'src/components/GameControls/');
+      const gameControlsDir = path.join(
+        process.cwd(),
+        'src/components/GameControls/'
+      );
       expect(fs.existsSync(gameControlsDir)).toBe(true);
     });
 
@@ -99,7 +114,10 @@ describe('T031 GameControls Component', () => {
           expect(GameControls).toBeDefined();
         } catch (error) {
           // Expected to fail in red state
-          console.warn('GameControls component props validation failed:', error);
+          console.warn(
+            'GameControls component props validation failed:',
+            error
+          );
         }
       }
     });
@@ -127,7 +145,10 @@ describe('T031 GameControls Component', () => {
     it('should implement new game button functionality', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('newGame');
           expect(gameControlsContent).toContain('onClick');
         } catch (error) {
@@ -140,7 +161,10 @@ describe('T031 GameControls Component', () => {
     it('should implement restart game button functionality', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('restart');
         } catch (error) {
           // Expected to fail in red state
@@ -152,7 +176,10 @@ describe('T031 GameControls Component', () => {
     it('should implement undo/redo functionality', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('undo');
           expect(gameControlsContent).toContain('redo');
         } catch (error) {
@@ -165,7 +192,10 @@ describe('T031 GameControls Component', () => {
     it('should implement pause/resume functionality', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('pause');
           expect(gameControlsContent).toContain('resume');
         } catch (error) {
@@ -178,7 +208,10 @@ describe('T031 GameControls Component', () => {
     it('should implement settings modal toggle', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('settings');
           expect(gameControlsContent).toContain('SettingsModal');
         } catch (error) {
@@ -191,7 +224,10 @@ describe('T031 GameControls Component', () => {
     it('should implement statistics display toggle', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('statistics');
           expect(gameControlsContent).toContain('GameStatistics');
         } catch (error) {
@@ -206,7 +242,10 @@ describe('T031 GameControls Component', () => {
     it('should handle button enabled/disabled states', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('disabled');
           expect(gameControlsContent).toContain('canUndo');
           expect(gameControlsContent).toContain('canRedo');
@@ -220,7 +259,10 @@ describe('T031 GameControls Component', () => {
     it('should show game state indicators', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('gameState');
           expect(gameControlsContent).toContain('isPaused');
         } catch (error) {
@@ -235,7 +277,10 @@ describe('T031 GameControls Component', () => {
     it('should implement keyboard shortcuts', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('onKeyDown');
           expect(gameControlsContent).toContain('useEffect');
         } catch (error) {
@@ -248,7 +293,10 @@ describe('T031 GameControls Component', () => {
     it('should handle keyboard event listeners', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('addEventListener');
           expect(gameControlsContent).toContain('keydown');
         } catch (error) {
@@ -263,7 +311,10 @@ describe('T031 GameControls Component', () => {
     it('should implement ARIA labels', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('aria-label');
           expect(gameControlsContent).toContain('role');
         } catch (error) {
@@ -276,7 +327,10 @@ describe('T031 GameControls Component', () => {
     it('should support keyboard navigation', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('tabIndex');
           expect(gameControlsContent).toContain('focus');
         } catch (error) {
@@ -289,7 +343,10 @@ describe('T031 GameControls Component', () => {
     it('should support screen readers', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('aria-describedby');
           expect(gameControlsContent).toContain('aria-pressed');
         } catch (error) {
@@ -304,7 +361,10 @@ describe('T031 GameControls Component', () => {
     it('should use React.memo for optimization', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('React.memo');
         } catch (error) {
           // Expected to fail in red state
@@ -316,7 +376,10 @@ describe('T031 GameControls Component', () => {
     it('should implement useCallback for event handlers', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('useCallback');
         } catch (error) {
           // Expected to fail in red state
@@ -370,7 +433,10 @@ describe('T031 GameControls Component', () => {
     it('should use strict TypeScript types', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
           expect(gameControlsContent).toContain('interface');
           expect(gameControlsContent).toContain('FC<');
         } catch (error) {
@@ -383,8 +449,11 @@ describe('T031 GameControls Component', () => {
     it('should import game state types', async () => {
       if (fs.existsSync(gameControlsComponentPath)) {
         try {
-          const gameControlsContent = fs.readFileSync(gameControlsComponentPath, 'utf8');
-          expect(gameControlsContent).toContain('from \'../../types\'');
+          const gameControlsContent = fs.readFileSync(
+            gameControlsComponentPath,
+            'utf8'
+          );
+          expect(gameControlsContent).toContain("from '../../types'");
           expect(gameControlsContent).toContain('GameState');
         } catch (error) {
           // Expected to fail in red state
@@ -411,7 +480,11 @@ describe('T031 GameControls Component', () => {
 
   afterAll(() => {
     console.log('✅ T031 test execution completed');
-    console.log('⚠️  This test should initially FAIL (red state) before implementation');
-    console.log('📋 Component should support: game controls, keyboard shortcuts, ARIA labels, 60fps animations');
+    console.log(
+      '⚠️  This test should initially FAIL (red state) before implementation'
+    );
+    console.log(
+      '📋 Component should support: game controls, keyboard shortcuts, ARIA labels, 60fps animations'
+    );
   });
 });

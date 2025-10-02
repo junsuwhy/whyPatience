@@ -8,10 +8,19 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('T029 FoundationPile Component with Drag/Drop', () => {
-  const foundationPileComponentPath = path.join(process.cwd(), 'src/components/FoundationPile/FoundationPile.tsx');
-  const foundationPileStylesPath = path.join(process.cwd(), 'src/components/FoundationPile/FoundationPile.styles.ts');
-  const foundationPileIndexPath = path.join(process.cwd(), 'src/components/FoundationPile/index.ts');
-  
+  const foundationPileComponentPath = path.join(
+    process.cwd(),
+    'src/components/FoundationPile/FoundationPile.tsx'
+  );
+  const foundationPileStylesPath = path.join(
+    process.cwd(),
+    'src/components/FoundationPile/FoundationPile.styles.ts'
+  );
+  const foundationPileIndexPath = path.join(
+    process.cwd(),
+    'src/components/FoundationPile/index.ts'
+  );
+
   beforeAll(() => {
     console.log('🧪 Testing T029 - FoundationPile Component');
     console.log('📁 Expected component path:', foundationPileComponentPath);
@@ -21,7 +30,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
 
   describe('File Structure', () => {
     it('should have FoundationPile/ directory structure', () => {
-      const foundationPileDir = path.join(process.cwd(), 'src/components/FoundationPile/');
+      const foundationPileDir = path.join(
+        process.cwd(),
+        'src/components/FoundationPile/'
+      );
       expect(fs.existsSync(foundationPileDir)).toBe(true);
     });
 
@@ -42,7 +54,9 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should export FoundationPile component from main file', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileModule = await import(foundationPileComponentPath);
+          const foundationPileModule = await import(
+            foundationPileComponentPath
+          );
           expect(foundationPileModule.FoundationPile).toBeDefined();
           expect(typeof foundationPileModule.FoundationPile).toBe('function');
         } catch (error) {
@@ -73,7 +87,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should implement drop functionality for accepting cards', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('useDrop');
         } catch (error) {
           // Expected to fail in red state
@@ -85,7 +102,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should validate cards based on foundation rules', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('canAddCard');
         } catch (error) {
           // Expected to fail in red state
@@ -99,7 +119,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should implement ARIA labels for foundation piles', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('aria-label');
         } catch (error) {
           // Expected to fail in red state
@@ -111,7 +134,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should support keyboard navigation', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('tabIndex');
         } catch (error) {
           // Expected to fail in red state
@@ -139,7 +165,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should implement hover effects', async () => {
       if (fs.existsSync(foundationPileStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(foundationPileStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            foundationPileStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('hover');
         } catch (error) {
           // Expected to fail in red state
@@ -151,7 +180,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should implement drag-over visual feedback', async () => {
       if (fs.existsSync(foundationPileStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(foundationPileStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            foundationPileStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('drag-over');
         } catch (error) {
           // Expected to fail in red state
@@ -165,7 +197,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should accept FoundationPile model as prop', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('FoundationPile');
           expect(foundationPileContent).toContain('pile:');
         } catch (error) {
@@ -178,7 +213,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should display suit indicator for assigned foundation', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('suit');
         } catch (error) {
           // Expected to fail in red state
@@ -190,7 +228,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should show completion state when pile is full', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('isComplete');
         } catch (error) {
           // Expected to fail in red state
@@ -204,7 +245,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should handle card drop events', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('onCardAdd');
         } catch (error) {
           // Expected to fail in red state
@@ -216,7 +260,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should handle card removal events', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('onCardRemove');
         } catch (error) {
           // Expected to fail in red state
@@ -230,7 +277,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should use strict TypeScript types', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('interface');
           expect(foundationPileContent).toContain('FC<');
         } catch (error) {
@@ -243,9 +293,12 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should import types from models and types modules', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
-          expect(foundationPileContent).toContain('from \'../../types');
-          expect(foundationPileContent).toContain('from \'../../models');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
+          expect(foundationPileContent).toContain("from '../../types");
+          expect(foundationPileContent).toContain("from '../../models");
         } catch (error) {
           // Expected to fail in red state
           expect(error).toBeDefined();
@@ -258,7 +311,10 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
     it('should use React.memo for optimization', async () => {
       if (fs.existsSync(foundationPileComponentPath)) {
         try {
-          const foundationPileContent = fs.readFileSync(foundationPileComponentPath, 'utf8');
+          const foundationPileContent = fs.readFileSync(
+            foundationPileComponentPath,
+            'utf8'
+          );
           expect(foundationPileContent).toContain('React.memo');
         } catch (error) {
           // Expected to fail in red state
@@ -270,7 +326,11 @@ describe('T029 FoundationPile Component with Drag/Drop', () => {
 
   afterAll(() => {
     console.log('✅ T029 test execution completed');
-    console.log('⚠️  This test should initially FAIL (red state) before implementation');
-    console.log('📋 Component should support: drag/drop validation, ARIA labels, suit indicators, completion state');
+    console.log(
+      '⚠️  This test should initially FAIL (red state) before implementation'
+    );
+    console.log(
+      '📋 Component should support: drag/drop validation, ARIA labels, suit indicators, completion state'
+    );
   });
 });

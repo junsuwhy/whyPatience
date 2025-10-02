@@ -8,11 +8,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('T032 GameStatistics Component', () => {
-  const gameStatisticsComponentPath = path.join(process.cwd(), 'src/components/GameStatistics/GameStatistics.tsx');
-  const gameStatisticsStylesPath = path.join(process.cwd(), 'src/components/GameStatistics/GameStatistics.styled.ts');
-  const gameStatisticsTypesPath = path.join(process.cwd(), 'src/components/GameStatistics/GameStatistics.types.ts');
-  const gameStatisticsIndexPath = path.join(process.cwd(), 'src/components/GameStatistics/index.ts');
-  
+  const gameStatisticsComponentPath = path.join(
+    process.cwd(),
+    'src/components/GameStatistics/GameStatistics.tsx'
+  );
+  const gameStatisticsStylesPath = path.join(
+    process.cwd(),
+    'src/components/GameStatistics/GameStatistics.styled.ts'
+  );
+  const gameStatisticsTypesPath = path.join(
+    process.cwd(),
+    'src/components/GameStatistics/GameStatistics.types.ts'
+  );
+  const gameStatisticsIndexPath = path.join(
+    process.cwd(),
+    'src/components/GameStatistics/index.ts'
+  );
+
   beforeAll(() => {
     console.log('🧪 Testing T032 - GameStatistics Component');
     console.log('📁 Expected component path:', gameStatisticsComponentPath);
@@ -23,7 +35,10 @@ describe('T032 GameStatistics Component', () => {
 
   describe('File Structure', () => {
     it('should have GameStatistics/ directory structure', () => {
-      const gameStatisticsDir = path.join(process.cwd(), 'src/components/GameStatistics/');
+      const gameStatisticsDir = path.join(
+        process.cwd(),
+        'src/components/GameStatistics/'
+      );
       expect(fs.existsSync(gameStatisticsDir)).toBe(true);
     });
 
@@ -48,7 +63,9 @@ describe('T032 GameStatistics Component', () => {
     it('should export GameStatistics component from main file', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsModule = await import(gameStatisticsComponentPath);
+          const gameStatisticsModule = await import(
+            gameStatisticsComponentPath
+          );
           expect(gameStatisticsModule.GameStatistics).toBeDefined();
           expect(typeof gameStatisticsModule.GameStatistics).toBe('function');
         } catch (error) {
@@ -94,12 +111,17 @@ describe('T032 GameStatistics Component', () => {
       // Test that the component accepts proper statistics props
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsModule = await import(gameStatisticsComponentPath);
+          const gameStatisticsModule = await import(
+            gameStatisticsComponentPath
+          );
           const GameStatistics = gameStatisticsModule.GameStatistics;
           expect(GameStatistics).toBeDefined();
         } catch (error) {
           // Expected to fail in red state
-          console.warn('GameStatistics component props validation failed:', error);
+          console.warn(
+            'GameStatistics component props validation failed:',
+            error
+          );
         }
       }
     });
@@ -129,7 +151,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement game time display', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('gameTime');
           expect(gameStatisticsContent).toContain('elapsed');
         } catch (error) {
@@ -142,7 +167,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement move count display', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('moveCount');
           expect(gameStatisticsContent).toContain('moves');
         } catch (error) {
@@ -155,7 +183,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement score display', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('score');
           expect(gameStatisticsContent).toContain('points');
         } catch (error) {
@@ -168,7 +199,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement win rate display', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('winRate');
           expect(gameStatisticsContent).toContain('percentage');
         } catch (error) {
@@ -181,7 +215,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement games played counter', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('gamesPlayed');
           expect(gameStatisticsContent).toContain('total');
         } catch (error) {
@@ -194,7 +231,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement games won counter', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('gamesWon');
           expect(gameStatisticsContent).toContain('won');
         } catch (error) {
@@ -209,9 +249,14 @@ describe('T032 GameStatistics Component', () => {
     it('should import and use useGameStatistics hook', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('useGameStatistics');
-          expect(gameStatisticsContent).toContain('from \'../../hooks/useGameStatistics\'');
+          expect(gameStatisticsContent).toContain(
+            "from '../../hooks/useGameStatistics'"
+          );
         } catch (error) {
           // Expected to fail in red state
           expect(error).toBeDefined();
@@ -222,7 +267,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement real-time statistics updates', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('useEffect');
           expect(gameStatisticsContent).toContain('statistics');
         } catch (error) {
@@ -237,7 +285,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement responsive layout', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('@media');
           expect(stylesContent).toContain('responsive');
         } catch (error) {
@@ -250,7 +301,10 @@ describe('T032 GameStatistics Component', () => {
     it('should support different screen sizes', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('min-width');
           expect(stylesContent).toContain('max-width');
         } catch (error) {
@@ -263,7 +317,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement mobile-friendly layout', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('mobile');
           expect(stylesContent).toContain('768px');
         } catch (error) {
@@ -278,7 +335,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement ARIA labels', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('aria-label');
           expect(gameStatisticsContent).toContain('role');
           expect(gameStatisticsContent).toContain('statistics');
@@ -292,7 +352,10 @@ describe('T032 GameStatistics Component', () => {
     it('should support keyboard navigation', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('tabIndex');
           expect(gameStatisticsContent).toContain('focus');
         } catch (error) {
@@ -305,7 +368,10 @@ describe('T032 GameStatistics Component', () => {
     it('should support screen readers', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('aria-describedby');
           expect(gameStatisticsContent).toContain('aria-live');
           expect(gameStatisticsContent).toContain('polite');
@@ -319,7 +385,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement WCAG 2.1 AA compliance', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('contrast');
           expect(stylesContent).toContain('4.5');
         } catch (error) {
@@ -334,7 +403,10 @@ describe('T032 GameStatistics Component', () => {
     it('should use React.memo for optimization', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('React.memo');
         } catch (error) {
           // Expected to fail in red state
@@ -346,7 +418,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement useMemo for expensive calculations', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('useMemo');
           expect(gameStatisticsContent).toContain('calculations');
         } catch (error) {
@@ -359,7 +434,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement useCallback for event handlers', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('useCallback');
         } catch (error) {
           // Expected to fail in red state
@@ -371,7 +449,10 @@ describe('T032 GameStatistics Component', () => {
     it('should support 60fps performance target', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('will-change');
           expect(stylesContent).toContain('transform');
         } catch (error) {
@@ -386,7 +467,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement smooth transitions', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('transition');
           expect(stylesContent).toContain('ease');
         } catch (error) {
@@ -399,7 +483,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement value update animations', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('keyframes');
           expect(stylesContent).toContain('animation');
         } catch (error) {
@@ -412,7 +499,10 @@ describe('T032 GameStatistics Component', () => {
     it('should implement hover effects', async () => {
       if (fs.existsSync(gameStatisticsStylesPath)) {
         try {
-          const stylesContent = fs.readFileSync(gameStatisticsStylesPath, 'utf8');
+          const stylesContent = fs.readFileSync(
+            gameStatisticsStylesPath,
+            'utf8'
+          );
           expect(stylesContent).toContain('hover');
           expect(stylesContent).toContain('scale');
         } catch (error) {
@@ -427,7 +517,10 @@ describe('T032 GameStatistics Component', () => {
     it('should use strict TypeScript types', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('interface');
           expect(gameStatisticsContent).toContain('FC<');
         } catch (error) {
@@ -440,8 +533,11 @@ describe('T032 GameStatistics Component', () => {
     it('should import game statistics types', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
-          expect(gameStatisticsContent).toContain('from \'../../types\'');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
+          expect(gameStatisticsContent).toContain("from '../../types'");
           expect(gameStatisticsContent).toContain('GameStatistics');
         } catch (error) {
           // Expected to fail in red state
@@ -472,7 +568,10 @@ describe('T032 GameStatistics Component', () => {
     it('should update statistics in real-time', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('realTime');
           expect(gameStatisticsContent).toContain('interval');
         } catch (error) {
@@ -485,7 +584,10 @@ describe('T032 GameStatistics Component', () => {
     it('should handle timer functionality', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('setInterval');
           expect(gameStatisticsContent).toContain('clearInterval');
         } catch (error) {
@@ -498,7 +600,10 @@ describe('T032 GameStatistics Component', () => {
     it('should format time display', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('formatTime');
           expect(gameStatisticsContent).toContain('minutes');
           expect(gameStatisticsContent).toContain('seconds');
@@ -514,7 +619,10 @@ describe('T032 GameStatistics Component', () => {
     it('should format numbers with proper separators', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('formatNumber');
           expect(gameStatisticsContent).toContain('toLocaleString');
         } catch (error) {
@@ -527,7 +635,10 @@ describe('T032 GameStatistics Component', () => {
     it('should format percentages correctly', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('toFixed');
           expect(gameStatisticsContent).toContain('%');
         } catch (error) {
@@ -540,7 +651,10 @@ describe('T032 GameStatistics Component', () => {
     it('should handle zero and null values gracefully', async () => {
       if (fs.existsSync(gameStatisticsComponentPath)) {
         try {
-          const gameStatisticsContent = fs.readFileSync(gameStatisticsComponentPath, 'utf8');
+          const gameStatisticsContent = fs.readFileSync(
+            gameStatisticsComponentPath,
+            'utf8'
+          );
           expect(gameStatisticsContent).toContain('||');
           expect(gameStatisticsContent).toContain('??');
         } catch (error) {
@@ -553,7 +667,11 @@ describe('T032 GameStatistics Component', () => {
 
   afterAll(() => {
     console.log('✅ T032 test execution completed');
-    console.log('⚠️  This test should initially FAIL (red state) before implementation');
-    console.log('📋 Component should support: game statistics display, real-time updates, responsive design, ARIA labels, 60fps animations');
+    console.log(
+      '⚠️  This test should initially FAIL (red state) before implementation'
+    );
+    console.log(
+      '📋 Component should support: game statistics display, real-time updates, responsive design, ARIA labels, 60fps animations'
+    );
   });
 });

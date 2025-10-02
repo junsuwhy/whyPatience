@@ -2,14 +2,14 @@
   "entryPointStrategy": "expand",
   "entryPoints": [
     "src/models",
-    "src/services", 
+    "src/services",
     "src/types",
     "src/hooks",
     "src/components"
   ],
   "exclude": [
     "**/specs/**",
-    "**/tests/**", 
+    "**/tests/**",
     "**/*.test.*",
     "**/setupTests.ts",
     "**/main.tsx",

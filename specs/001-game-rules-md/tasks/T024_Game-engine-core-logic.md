@@ -74,6 +74,7 @@ npm test tests/unit/T024_Game-engine-core-logic.test.ts
 ## AI 使用工具
 
 此任務需要使用以下工具：
+
 - **Write**: 建立新的遊戲引擎服務檔案
 - **Edit**: 編輯和修改遊戲邏輯實作
 - **Read**: 讀取相關的類型定義、模型和契約檔案

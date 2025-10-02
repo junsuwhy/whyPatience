@@ -5,6 +5,7 @@
 實作 StockPile 組件，這是 Desktop Solitaire 遊戲中的庫存牌堆組件。根據 constitution.md 的 Test-Driven Development 原則，此任務需要實作一個管理剩餘卡牌、支援翻牌操作、並提供 1 張/3 張抽牌模式的 React 組件。
 
 此組件需要：
+
 - 顯示庫存牌堆和廢牌堆 (stock pile 和 waste pile)
 - 支援點擊翻牌操作 (1張或3張模式)
 - 當庫存牌堆空時支援重新循環廢牌堆
@@ -65,6 +66,7 @@ npm run typecheck
 - **Grep**: 搜尋程式碼中的特定模式
 
 需要的檔案參考：
+
 - `src/types/index.ts` - 類型定義
 - `src/models/stock-pile.ts` - StockPile model
 - `src/components/Card/Card.tsx` - Card 組件參考

@@ -7,9 +7,10 @@
 依據憲章 Principle II (TDD)，此實作必須讓所有相關的失敗測試通過，特別是 contract test 和 integration test。
 
 此服務將提供：
+
 - 牌組移動合法性驗證（Tableau 之間的移動）
 - Foundation pile 建構規則驗證
-- Stock pile 操作驗證  
+- Stock pile 操作驗證
 - 遊戲勝利條件檢查
 - 移動歷史驗證
 
@@ -33,11 +34,13 @@
 ### 測試流程
 
 1. 執行相關的 contract test 檢查介面實作：
+
    ```bash
    npm test tests/contract/test_game_engine.test.ts
    ```
 
 2. 執行 integration test 驗證遊戲流程：
+
    ```bash
    npm test tests/integration/test_card_movement.test.ts
    npm test tests/integration/test_foundation.test.ts
@@ -45,6 +48,7 @@
    ```
 
 3. 檢查 TypeScript 編譯和程式碼品質：
+
    ```bash
    npm run typecheck
    npm run lint
@@ -63,6 +67,7 @@ npm test -- --testPathPattern="(test_game_engine|test_card_movement|test_foundat
 ```
 
 **TDD專用測試指令（測試T025實作）：**
+
 ```bash
 node specs/001-game-rules-md/tests/T025_Game-validation-rules_test.mjs
 ```
@@ -75,8 +80,9 @@ node specs/001-game-rules-md/tests/T025_Game-validation-rules_test.mjs
 - **Edit** - 修改檔案內容以符合測試需求
 
 需要參考的檔案：
+
 - `src/types/card.ts` - 卡牌型別定義
-- `src/types/game-state.ts` - 遊戲狀態型別  
+- `src/types/game-state.ts` - 遊戲狀態型別
 - `src/models/` - 相關的 model 實作
 - `tests/contract/test_game_engine.test.ts` - 合約測試
 

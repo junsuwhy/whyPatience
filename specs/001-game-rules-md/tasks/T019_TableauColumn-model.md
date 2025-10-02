@@ -5,6 +5,7 @@
 實作 TableauColumn 模型類別，用於管理 Solitaire 遊戲中的 tableau 牌堆（工作區的七個下降序列牌堆）。此模型需要處理牌的放置、移除、驗證移動規則，以及牌的可見性狀態管理。
 
 TableauColumn 是遊戲的核心組件之一，必須支援：
+
 - 交替顏色的下降序列（紅黑交替，數值遞減）
 - 翻牌機制（當頂部隱藏牌暴露時自動翻面）
 - 移動驗證（確保只有合法的牌可以放置）
@@ -55,6 +56,7 @@ npm test tests/unit/T019_TableauColumn-model.test.ts
 - **Glob**: 搜尋相關檔案和依賴
 
 本任務需要參考：
+
 - `src/types/card.ts` - Card 型別定義
 - `src/types/game-state.ts` - GameState 型別
 - `src/models/card.ts` - Card 模型實作

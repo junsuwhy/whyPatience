@@ -52,6 +52,7 @@ npx jest tests/T031_GameControls-component.test.ts
 ```
 
 **手動執行測試指令：**
+
 ```bash
 npx jest tests/T031_GameControls-component.test.ts --verbose
 ```

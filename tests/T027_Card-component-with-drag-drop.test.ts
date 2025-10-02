@@ -8,11 +8,23 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('T027 Card Component with Drag/Drop', () => {
-  const cardComponentPath = path.join(process.cwd(), 'src/components/Card/Card.tsx');
-  const cardStylesPath = path.join(process.cwd(), 'src/components/Card/Card.styles.ts');
-  const cardTypesPath = path.join(process.cwd(), 'src/components/Card/Card.types.ts');
-  const cardIndexPath = path.join(process.cwd(), 'src/components/Card/index.ts');
-  
+  const cardComponentPath = path.join(
+    process.cwd(),
+    'src/components/Card/Card.tsx'
+  );
+  const cardStylesPath = path.join(
+    process.cwd(),
+    'src/components/Card/Card.styles.ts'
+  );
+  const cardTypesPath = path.join(
+    process.cwd(),
+    'src/components/Card/Card.types.ts'
+  );
+  const cardIndexPath = path.join(
+    process.cwd(),
+    'src/components/Card/index.ts'
+  );
+
   beforeAll(() => {
     console.log('🧪 Testing T027 - Card Component with Drag/Drop');
     console.log('📁 Expected component path:', cardComponentPath);
@@ -275,7 +287,7 @@ describe('T027 Card Component with Drag/Drop', () => {
       if (fs.existsSync(cardComponentPath)) {
         try {
           const cardContent = fs.readFileSync(cardComponentPath, 'utf8');
-          expect(cardContent).toContain('from \'../../types\'');
+          expect(cardContent).toContain("from '../../types'");
         } catch (error) {
           // Expected to fail in red state
           expect(error).toBeDefined();
@@ -286,7 +298,11 @@ describe('T027 Card Component with Drag/Drop', () => {
 
   afterAll(() => {
     console.log('✅ T027 test execution completed');
-    console.log('⚠️  This test should initially FAIL (red state) before implementation');
-    console.log('📋 Component should support: drag/drop, ARIA labels, animations, 60fps performance');
+    console.log(
+      '⚠️  This test should initially FAIL (red state) before implementation'
+    );
+    console.log(
+      '📋 Component should support: drag/drop, ARIA labels, animations, 60fps performance'
+    );
   });
 });

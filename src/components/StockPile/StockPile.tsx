@@ -16,7 +16,7 @@ import React, {
 } from 'react';
 import { useDrag } from 'react-dnd';
 import { Card as CardComponent } from '../Card/Card';
-import { DrawMode, Position } from '../../types/index';
+import { DrawMode } from '../../types/index';
 import { StockPile as StockPileModel } from '../../models/stock-pile';
 import {
   StockPileProps,

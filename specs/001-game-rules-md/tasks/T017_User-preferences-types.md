@@ -43,6 +43,7 @@ npm test tests/unit/T017_preferences_types.test.ts
 ## AI 使用工具
 
 此任務需要使用以下工具：
+
 - **Write**: 建立新的 TypeScript 檔案
 - **Edit**: 編輯和修改類型定義
 - **Read**: 讀取相關檔案以確保類型一致性
