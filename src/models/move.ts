@@ -928,7 +928,3 @@ export class MoveHistory {
     return history;
   }
 }
-
-// Export classes and types
-export { Move, MoveHistory };
-export type { MoveExecutionResult, SerializableMove };
