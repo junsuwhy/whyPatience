@@ -271,6 +271,23 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     }, [isDisabled, newGame, clearError, onError]);
 
     /**
+     * Focuses the DOM element for the given area and index
+     */
+    const focusElement = useCallback((area: GameArea, index: number) => {
+      switch (area) {
+        case GameArea.FOUNDATION:
+          foundationRefs.current[index]?.focus();
+          break;
+        case GameArea.TABLEAU:
+          tableauRefs.current[index]?.focus();
+          break;
+        case GameArea.STOCK:
+          stockRef.current?.focus();
+          break;
+      }
+    }, []);
+
+    /**
      * Handles focus navigation with arrow keys
      */
     const handleFocusNavigation = useCallback(
@@ -327,23 +344,6 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
       },
       [focusedElement, focusElement]
     );
-
-    /**
-     * Focuses the DOM element for the given area and index
-     */
-    const focusElement = useCallback((area: GameArea, index: number) => {
-      switch (area) {
-        case GameArea.FOUNDATION:
-          foundationRefs.current[index]?.focus();
-          break;
-        case GameArea.TABLEAU:
-          tableauRefs.current[index]?.focus();
-          break;
-        case GameArea.STOCK:
-          stockRef.current?.focus();
-          break;
-      }
-    }, []);
 
     /**
      * Handles action on focused element (Enter/Space)
