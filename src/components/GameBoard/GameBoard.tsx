@@ -13,6 +13,7 @@ import React, {
   useRef,
   KeyboardEvent,
   useState,
+  useMemo,
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -31,6 +32,10 @@ import { useGameState } from '../../hooks/useGameState';
 import { GameState, GameArea, Position } from '../../types/game-state';
 import { Card } from '../../types/card';
 import { MoveResult } from '../../services/game-engine';
+import { FoundationPile as FoundationPileModel } from '../../models/foundation-pile';
+import { TableauColumn as TableauColumnModel } from '../../models/tableau-column';
+import { StockPile as StockPileModel } from '../../models/stock-pile';
+import { Card as CardModel } from '../../models/card';
 
 // Import styled components
 import {
@@ -152,6 +157,32 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
 
     // Check if game is won
     const isGameWon = isWon;
+
+    // Convert plain state objects to model instances for components
+    const foundationPileModels = useMemo(() => {
+      return gameState.foundation.map(foundationState => {
+        const cards = foundationState.cards.map(card => CardModel.fromJSON(card));
+        return new FoundationPileModel(foundationState.suit || undefined, cards);
+      });
+    }, [gameState.foundation]);
+
+    const tableauColumnModels = useMemo(() => {
+      return gameState.tableau.map(tableauState => {
+        const cards = tableauState.cards.map(card => CardModel.fromJSON(card));
+        return new TableauColumnModel(tableauState.id, cards, tableauState.faceDownCount);
+      });
+    }, [gameState.tableau]);
+
+    const stockPileModel = useMemo(() => {
+      const stockCards = gameState.stock.cards.map(card => CardModel.fromJSON(card));
+      const pile = new StockPileModel(stockCards, gameState.stock.drawMode);
+      // Set waste cards if they exist
+      if (gameState.stock.wasteCards && gameState.stock.wasteCards.length > 0) {
+        const wasteCards = gameState.stock.wasteCards.map(card => CardModel.fromJSON(card));
+        pile.waste = wasteCards;
+      }
+      return pile;
+    }, [gameState.stock]);
 
     /**
      * Handles card movement between different game areas
@@ -475,7 +506,7 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
      */
     const renderFoundationArea = () => (
       <FoundationArea role="region" aria-label="Foundation piles">
-        {gameState.foundation.map((pile, index) => (
+        {foundationPileModels.map((pile, index) => (
           <FoundationPile
             key={`foundation-${index}`}
             pile={pile}
@@ -528,7 +559,7 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     const renderStockArea = () => (
       <StockArea role="region" aria-label="Stock and waste piles">
         <StockPile
-          pile={gameState.stock}
+          pile={stockPileModel}
           position={{ area: GameArea.STOCK, index: 0 }}
           isDisabled={isDisabled}
           animationsEnabled={animationsEnabled}

@@ -233,8 +233,8 @@ export const CardRank = styled.div<{
         return '14px';
     }
   }};
-  color: ${({ color, theme = defaultCardTheme }) =>
-    color === Color.RED ? theme.suitColors.red : theme.suitColors.black};
+  color: ${({ color, theme }) =>
+    color === Color.RED ? (theme?.suitColors?.red || defaultCardTheme.suitColors.red) : (theme?.suitColors?.black || defaultCardTheme.suitColors.black)};
   line-height: 1;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -285,8 +285,8 @@ export const CardSuit = styled.div<{
         return '16px';
     }
   }};
-  color: ${({ color, theme = defaultCardTheme }) =>
-    color === Color.RED ? theme.suitColors.red : theme.suitColors.black};
+  color: ${({ color, theme }) =>
+    color === Color.RED ? (theme?.suitColors?.red || defaultCardTheme.suitColors.red) : (theme?.suitColors?.black || defaultCardTheme.suitColors.black)};
   line-height: 1;
   text-align: center;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
