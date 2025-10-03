@@ -7,6 +7,13 @@
 import styled, { css, keyframes } from 'styled-components';
 import { Color, Suit } from '../../types/card';
 import { CardTheme, defaultCardTheme } from './Card.types';
+import {
+  flipCardKeyframes,
+  liftCardKeyframes,
+  pulseHighlightKeyframes,
+  animationClasses,
+} from '../../styles/keyframes';
+import { DURATIONS, EASING, Z_INDEX } from '../../styles/animation';
 
 /**
  * Props interface for styled components
@@ -44,7 +51,18 @@ const shimmerAnimation = keyframes`
 /**
  * Main card container with drag-and-drop and animation support
  */
-export const CardContainer = styled.div<StyledCardProps>`
+export const CardContainer = styled.div.withConfig({
+  shouldForwardProp: prop =>
+    ![
+      'isDragging',
+      'isValidDropTarget',
+      'isHighlighted',
+      'isSelected',
+      'isDisabled',
+      'scale',
+      'zIndex',
+    ].includes(prop),
+})<StyledCardProps>`
   position: relative;
   width: 75px;
   height: 100px;
@@ -108,7 +126,8 @@ export const CardContainer = styled.div<StyledCardProps>`
     css`
       border-color: #28a745;
       background-color: #d4edda;
-      animation: ${pulseAnimation} 1s ease-in-out infinite;
+      animation: ${pulseHighlightKeyframes} ${DURATIONS.SLOW}ms
+        ${EASING.EASE_IN_OUT} infinite;
     `}
   
   /* Highlighted state */
@@ -144,6 +163,30 @@ export const CardContainer = styled.div<StyledCardProps>`
       }
     `}
   
+  /* Animation classes for dynamic animations */
+  &[data-animation="flip"] {
+    animation: ${flipCardKeyframes} ${DURATIONS.FAST}ms ${EASING.EASE_OUT};
+  }
+
+  &[data-animation='lift'],
+  &[data-dragging='true'] {
+    animation: ${liftCardKeyframes} ${DURATIONS.INSTANT}ms ${EASING.EASE_OUT};
+    z-index: ${Z_INDEX.DRAGGING};
+  }
+
+  &[data-animation='pulse'] {
+    animation: ${pulseHighlightKeyframes} ${DURATIONS.SLOW}ms
+      ${EASING.EASE_IN_OUT} infinite;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    &[data-reduced-motion='true'] {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
   /* Responsive design */
   @media (max-width: 768px) {
     width: 60px;
@@ -159,7 +202,9 @@ export const CardContainer = styled.div<StyledCardProps>`
 /**
  * Card face container for front/back display
  */
-export const CardFace = styled.div<{ isRevealed: boolean }>`
+export const CardFace = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isRevealed',
+})<{ isRevealed: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -168,11 +213,16 @@ export const CardFace = styled.div<{ isRevealed: boolean }>`
   border-radius: inherit;
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform ${DURATIONS.FAST}ms ${EASING.EASE_OUT};
 
   /* Flip animation */
   transform: ${({ isRevealed }) =>
     isRevealed ? 'rotateY(0deg)' : 'rotateY(180deg)'};
+
+  /* Enhanced flip animation with data attributes */
+  ${CardContainer}[data-animation="flip"] & {
+    animation: ${flipCardKeyframes} ${DURATIONS.FAST}ms ${EASING.EASE_OUT};
+  }
 `;
 
 /**
@@ -217,7 +267,9 @@ export const CardBack = styled(CardFace)`
 /**
  * Card rank display (number or face card letter)
  */
-export const CardRank = styled.div<{
+export const CardRank = styled.div.withConfig({
+  shouldForwardProp: prop => !['color', 'size'].includes(prop),
+})<{
   color: Color;
   size?: 'small' | 'medium' | 'large';
 }>`
@@ -234,7 +286,9 @@ export const CardRank = styled.div<{
     }
   }};
   color: ${({ color, theme }) =>
-    color === Color.RED ? (theme?.suitColors?.red || defaultCardTheme.suitColors.red) : (theme?.suitColors?.black || defaultCardTheme.suitColors.black)};
+    color === Color.RED
+      ? theme?.suitColors?.red || defaultCardTheme.suitColors.red
+      : theme?.suitColors?.black || defaultCardTheme.suitColors.black};
   line-height: 1;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -270,7 +324,9 @@ export const CardRank = styled.div<{
 /**
  * Card suit symbol display
  */
-export const CardSuit = styled.div<{
+export const CardSuit = styled.div.withConfig({
+  shouldForwardProp: prop => !['suit', 'color', 'size'].includes(prop),
+})<{
   suit: Suit;
   color: Color;
   size?: 'small' | 'medium' | 'large';
@@ -286,7 +342,9 @@ export const CardSuit = styled.div<{
     }
   }};
   color: ${({ color, theme }) =>
-    color === Color.RED ? (theme?.suitColors?.red || defaultCardTheme.suitColors.red) : (theme?.suitColors?.black || defaultCardTheme.suitColors.black)};
+    color === Color.RED
+      ? theme?.suitColors?.red || defaultCardTheme.suitColors.red
+      : theme?.suitColors?.black || defaultCardTheme.suitColors.black};
   line-height: 1;
   text-align: center;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
@@ -340,7 +398,9 @@ export const CardSuit = styled.div<{
 /**
  * Card corner elements (rank and suit in corners)
  */
-export const CardCorner = styled.div<{ position: 'top-left' | 'bottom-right' }>`
+export const CardCorner = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'position',
+})<{ position: 'top-left' | 'bottom-right' }>`
   position: absolute;
   display: flex;
   flex-direction: column;

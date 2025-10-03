@@ -13,7 +13,7 @@
  * - Error handling and user feedback
  */
 
-import { GameEngineContract, MoveResult, UndoResult, DrawResult } from '../../specs/001-game-rules-md/contracts/game-engine-interface';
+import { GameEngineContract, MoveResult, UndoResult, DrawResult } from '../../src/interfaces/game-engine-interface';
 import { Card, Suit, Rank, Color, getCardColor } from '../../src/types/card';
 import {
   GameState,

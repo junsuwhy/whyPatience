@@ -6,6 +6,7 @@
 
 import React, { MouseEvent, KeyboardEvent } from 'react';
 import { Card, CardPosition } from '../../types/card';
+import { AnimationMode } from '../../types/preferences';
 
 /**
  * Props interface for the Card component
@@ -41,6 +42,9 @@ export interface CardProps {
 
   /** Z-index for layering cards in stacks */
   zIndex?: number;
+
+  /** Animation mode for controlling animation complexity */
+  animationMode?: AnimationMode;
 
   /** Click event handler */
   onClick?: (event: MouseEvent<HTMLDivElement>, card: Card) => void;

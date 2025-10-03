@@ -28,7 +28,7 @@ import type {
   GameControlsProps,
   SettingsModalProps,
   GameStatisticsProps,
-} from '../../specs/001-game-rules-md/contracts/ui-component-interfaces';
+} from '../../src/interfaces/ui-component-interfaces';
 
 // Mock components that should exist but don't yet (TDD red state)
 // These components should fail to import or render properly

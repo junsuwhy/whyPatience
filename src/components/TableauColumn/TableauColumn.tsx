@@ -13,7 +13,8 @@ import React, {
 } from 'react';
 import { useDrop } from 'react-dnd';
 import { Card as CardComponent } from '../Card';
-import { Card, Rank, Suit, Position } from '../../types';
+import { Card, Rank, Suit } from '../../types/card';
+import { Position, GameArea } from '../../types/game-state';
 import {
   TableauColumnProps,
   TableauDropItem,
@@ -169,12 +170,15 @@ export const TableauColumn: FC<TableauColumnProps> = React.memo(
           return {
             success: false,
             targetColumnIndex: columnIndex,
-            targetPosition: { type: 'tableau', index: columnIndex },
+            targetPosition: { area: GameArea.TABLEAU, index: columnIndex },
           };
         }
 
         const fromPosition: Position = item.sourcePosition;
-        const toPosition: Position = { type: 'tableau', index: columnIndex };
+        const toPosition: Position = {
+          area: GameArea.TABLEAU,
+          index: columnIndex,
+        };
 
         onMoveCards(item.cards, fromPosition, toPosition);
 
@@ -329,7 +333,7 @@ export const TableauColumn: FC<TableauColumnProps> = React.memo(
                     position={{
                       type: 'tableau',
                       index: columnIndex,
-                      cardIndex: index,
+                      stackPosition: index,
                     }}
                     isDraggable={position.isDraggable}
                     scale={position.isTopCard ? 1 : 0.95}

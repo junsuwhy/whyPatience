@@ -104,7 +104,8 @@ const getWastePileAriaLabel = (pile: StockPileModel): string => {
 export const StockPile: React.FC<StockPileProps> = React.memo(
   ({
     pile,
-    position,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    position, // TODO: Use position for enhanced functionality
     isDisabled = false,
     isSelected = false,
     animationsEnabled = true,
@@ -170,7 +171,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
         return {
           type: 'card',
           card: topWasteCard,
-          sourcePosition: { ...position, type: 'waste' },
+          sourcePosition: { type: 'waste' },
           sourceType: 'waste',
           wasteIndex: pile.waste.length - 1,
         };
@@ -401,7 +402,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
                     ...pile.stock[pile.stock.length - 1],
                     isVisible: false,
                   }}
-                  position={{ ...position, type: 'stock' }}
+                  position={{ type: 'stock' }}
                   isDraggable={false}
                   scale={0.9}
                   zIndex={3}
@@ -412,7 +413,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
                       ...pile.stock[pile.stock.length - 2],
                       isVisible: false,
                     }}
-                    position={{ ...position, type: 'stock' }}
+                    position={{ type: 'stock' }}
                     isDraggable={false}
                     scale={0.9}
                     zIndex={2}
@@ -424,7 +425,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
                       ...pile.stock[pile.stock.length - 3],
                       isVisible: false,
                     }}
-                    position={{ ...position, type: 'stock' }}
+                    position={{ type: 'stock' }}
                     isDraggable={false}
                     scale={0.9}
                     zIndex={1}
@@ -483,7 +484,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
               <>
                 <CardComponent
                   card={topWasteCard}
-                  position={{ ...position, type: 'waste' }}
+                  position={{ type: 'waste' }}
                   isDraggable={!isDisabled}
                   isDragging={isDragging}
                   scale={0.9}
@@ -493,7 +494,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
                 {pile.waste.length > 1 && (
                   <CardComponent
                     card={pile.waste[pile.waste.length - 2]}
-                    position={{ ...position, type: 'waste' }}
+                    position={{ type: 'waste' }}
                     isDraggable={false}
                     scale={0.9}
                     zIndex={2}
@@ -502,7 +503,7 @@ export const StockPile: React.FC<StockPileProps> = React.memo(
                 {pile.waste.length > 2 && (
                   <CardComponent
                     card={pile.waste[pile.waste.length - 3]}
-                    position={{ ...position, type: 'waste' }}
+                    position={{ type: 'waste' }}
                     isDraggable={false}
                     scale={0.9}
                     zIndex={1}

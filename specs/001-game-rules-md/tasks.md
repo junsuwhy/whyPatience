@@ -94,9 +94,9 @@
 ## Phase 3.4: Integration
 
 - [x] T040 Connect GameBoard to game engine service
-- [ ] T041 Integrate React DnD with card components
-- [ ] T042 Add card animation system with styled-components
-- [ ] T043 Implement keyboard navigation and accessibility
+- [x] T041 Integrate React DnD with card components
+- [x] T042 Add card animation system with styled-components
+- [x] T043 Implement keyboard navigation and accessibility
 - [ ] T044 Connect storage service to components
 - [ ] T045 Add game state persistence and restoration
 

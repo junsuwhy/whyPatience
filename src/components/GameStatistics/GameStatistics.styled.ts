@@ -50,7 +50,9 @@ export const numberCountAnimation = keyframes`
 /**
  * Main container for the GameStatistics component
  */
-export const StatisticsContainer = styled.div<{
+export const StatisticsContainer = styled.div.withConfig({
+  shouldForwardProp: prop => !['isCompact', 'displayMode'].includes(prop),
+})<{
   isCompact?: boolean;
   displayMode: StatisticsDisplayMode;
 }>`
@@ -93,7 +95,9 @@ export const StatisticsContainer = styled.div<{
 /**
  * Header section for the statistics panel
  */
-export const StatisticsHeader = styled.div<{ isCompact?: boolean }>`
+export const StatisticsHeader = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isCompact',
+})<{ isCompact?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,7 +109,9 @@ export const StatisticsHeader = styled.div<{ isCompact?: boolean }>`
 /**
  * Title for the statistics panel
  */
-export const StatisticsTitle = styled.h3<{ isCompact?: boolean }>`
+export const StatisticsTitle = styled.h3.withConfig({
+  shouldForwardProp: prop => prop !== 'isCompact',
+})<{ isCompact?: boolean }>`
   margin: 0;
   font-size: ${props => (props.isCompact ? '0.875rem' : '1rem')};
   font-weight: 600;
@@ -132,7 +138,9 @@ export const ModeToggle = styled.div`
   border: 1px solid #dee2e6;
 `;
 
-export const ModeButton = styled.button<{ isActive?: boolean }>`
+export const ModeButton = styled.button.withConfig({
+  shouldForwardProp: prop => prop !== 'isActive',
+})<{ isActive?: boolean }>`
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
   border: none;
@@ -161,7 +169,9 @@ export const ModeButton = styled.button<{ isActive?: boolean }>`
 /**
  * Grid container for statistics items
  */
-export const StatisticsGrid = styled.div<{ isCompact?: boolean }>`
+export const StatisticsGrid = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isCompact',
+})<{ isCompact?: boolean }>`
   display: grid;
   grid-template-columns: ${props =>
     props.isCompact ? '1fr' : 'repeat(auto-fit, minmax(120px, 1fr))'};
@@ -176,7 +186,10 @@ export const StatisticsGrid = styled.div<{ isCompact?: boolean }>`
 /**
  * Individual statistic item container
  */
-export const StatisticItem = styled.div<{
+export const StatisticItem = styled.div.withConfig({
+  shouldForwardProp: prop =>
+    !['isHighlighted', 'isAnimating', 'trend', 'isClickable'].includes(prop),
+})<{
   isHighlighted?: boolean;
   isAnimating?: boolean;
   trend?: 'up' | 'down' | 'neutral';
@@ -260,7 +273,9 @@ export const StatisticIcon = styled.div`
 /**
  * Label for statistic items
  */
-export const StatisticLabel = styled.div<{ isCompact?: boolean }>`
+export const StatisticLabel = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isCompact',
+})<{ isCompact?: boolean }>`
   font-size: ${props => (props.isCompact ? '0.7rem' : '0.75rem')};
   color: #6c757d;
   font-weight: 500;
@@ -272,7 +287,10 @@ export const StatisticLabel = styled.div<{ isCompact?: boolean }>`
 /**
  * Value display for statistic items
  */
-export const StatisticValue = styled.div<{
+export const StatisticValue = styled.div.withConfig({
+  shouldForwardProp: prop =>
+    !['isAnimating', 'isHighlighted', 'isCompact'].includes(prop),
+})<{
   isAnimating?: boolean;
   isHighlighted?: boolean;
   isCompact?: boolean;
@@ -303,7 +321,9 @@ export const StatisticValue = styled.div<{
 /**
  * Comparison indicator for performance tracking
  */
-export const ComparisonIndicator = styled.div<{
+export const ComparisonIndicator = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'trend',
+})<{
   trend: 'improvement' | 'decline' | 'same';
 }>`
   display: flex;
@@ -330,7 +350,9 @@ export const ComparisonIndicator = styled.div<{
 /**
  * Tooltip container for additional information
  */
-export const StatisticTooltip = styled.div<{ isVisible: boolean }>`
+export const StatisticTooltip = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isVisible',
+})<{ isVisible: boolean }>`
   position: absolute;
   top: -40px;
   left: 50%;
@@ -364,7 +386,9 @@ export const StatisticTooltip = styled.div<{ isVisible: boolean }>`
 /**
  * Real-time update indicator
  */
-export const UpdateIndicator = styled.div<{ isUpdating: boolean }>`
+export const UpdateIndicator = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isUpdating',
+})<{ isUpdating: boolean }>`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;

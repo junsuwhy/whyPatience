@@ -10,7 +10,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
-import { GameEngineContract } from '../../specs/001-game-rules-md/contracts/game-engine-interface';
+import { GameEngineContract } from '../../src/interfaces/game-engine-interface';
 import {
   CardRank,
   CardSuit,

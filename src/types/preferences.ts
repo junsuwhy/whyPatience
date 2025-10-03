@@ -29,6 +29,12 @@ export type DrawMode = 'draw-one' | 'draw-three';
 export type AnimationSpeed = 'none' | 'slow' | 'normal' | 'fast';
 
 /**
+ * Animation mode enumeration for controlling animation complexity.
+ * Provides accessibility support and performance optimization options.
+ */
+export type AnimationMode = 'full' | 'reduced' | 'off';
+
+/**
  * Sound preferences interface for audio-related settings.
  * Controls all audio feedback and sound effects in the game.
  */
@@ -81,6 +87,8 @@ export interface DisplayPreferences {
   cardStyle: CardStyle;
   /** Animation speed setting */
   animationSpeed: AnimationSpeed;
+  /** Animation mode setting for accessibility and performance */
+  animationMode: AnimationMode;
   /** Show game timer */
   showTimer: boolean;
   /** Show move counter */
@@ -144,6 +152,7 @@ export const DEFAULT_DISPLAY_PREFERENCES: DisplayPreferences = {
   theme: 'auto',
   cardStyle: 'classic',
   animationSpeed: 'normal',
+  animationMode: 'full',
   showTimer: true,
   showMoveCounter: true,
   showScore: true,

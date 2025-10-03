@@ -5,7 +5,9 @@
  */
 
 import React, { MouseEvent, KeyboardEvent } from 'react';
-import { Card, Position, DrawMode } from '../../types/index';
+import { Card } from '../../types/card';
+import { Position } from '../../types/game-state';
+import { DrawMode } from '../../types/index';
 import { StockPile as StockPileModel } from '../../models/stock-pile';
 import { CardDragItem } from '../Card/Card.types';
 

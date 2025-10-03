@@ -12,24 +12,12 @@
 import styled, { css, keyframes } from 'styled-components';
 import { Suit } from '../../types/index';
 import { Card } from '../Card/Card';
+import { pulseHighlightKeyframes } from '../../styles/keyframes';
+import { DURATIONS, EASING } from '../../styles/animation';
 
 /**
- * Animation keyframes for various effects
+ * Legacy animation keyframes (now using centralized animation system)
  */
-const pulseAnimation = keyframes`
-  0% {
-    transform: scale(1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  50% {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-`;
 
 const glow = keyframes`
   0% {
@@ -72,7 +60,12 @@ interface FoundationPileContainerProps {
 /**
  * Main container for the foundation pile
  */
-export const FoundationPileContainer = styled.div<FoundationPileContainerProps>`
+export const FoundationPileContainer = styled.div.withConfig({
+  shouldForwardProp: prop =>
+    !['isOver', 'canDrop', 'isDisabled', 'isSelected', 'isComplete'].includes(
+      prop
+    ),
+})<FoundationPileContainerProps>`
   position: relative;
   width: 80px;
   height: 110px;
@@ -108,7 +101,8 @@ export const FoundationPileContainer = styled.div<FoundationPileContainerProps>`
     css`
       border-color: #007bff;
       background-color: #e3f2fd;
-      animation: ${pulseAnimation} 2s infinite;
+      animation: ${pulseHighlightKeyframes} ${DURATIONS.SLOW}ms
+        ${EASING.EASE_IN_OUT} infinite;
     `}
 
   /* Drag-over state */
@@ -130,7 +124,8 @@ export const FoundationPileContainer = styled.div<FoundationPileContainerProps>`
         border: 2px solid ${props.canDrop ? '#28a745' : '#dc3545'};
         border-radius: 10px;
         opacity: 0.5;
-        animation: ${pulseAnimation} 1s infinite;
+        animation: ${pulseHighlightKeyframes} ${DURATIONS.FAST}ms
+          ${EASING.EASE_IN_OUT} infinite;
       }
     `}
   
@@ -143,6 +138,19 @@ export const FoundationPileContainer = styled.div<FoundationPileContainerProps>`
       box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
     `}
   
+  /* Animation data attribute support */
+  &[data-animation="pulse"] {
+    animation: ${pulseHighlightKeyframes} ${DURATIONS.SLOW}ms
+      ${EASING.EASE_IN_OUT} infinite;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    &[data-reduced-motion='true'] {
+      animation: none !important;
+    }
+  }
+
   /* Performance optimization */
   will-change: transform, box-shadow, border-color;
   transform-origin: center;
@@ -209,7 +217,9 @@ interface SuitIndicatorProps {
 /**
  * Suit indicator for foundation piles
  */
-export const SuitIndicator = styled.div<SuitIndicatorProps>`
+export const SuitIndicator = styled.div.withConfig({
+  shouldForwardProp: prop => !['suit', 'color'].includes(prop),
+})<SuitIndicatorProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,7 +235,8 @@ export const SuitIndicator = styled.div<SuitIndicatorProps>`
   transition: all 0.2s ease-in-out;
 
   /* Add subtle animation */
-  animation: ${pulseAnimation} 3s infinite;
+  animation: ${pulseHighlightKeyframes} ${DURATIONS.EXTENDED}ms
+    ${EASING.EASE_IN_OUT} infinite;
 `;
 
 /**

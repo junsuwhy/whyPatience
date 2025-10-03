@@ -9,7 +9,7 @@ import {
   StorageInfo,
   StorageError,
   StorageConfig,
-} from '../../specs/001-game-rules-md/contracts/storage-interface';
+} from '../interfaces/storage-interface';
 import {
   GameState,
   UserPreferences,

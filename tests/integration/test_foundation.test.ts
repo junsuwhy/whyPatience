@@ -7,7 +7,7 @@
 import {
   GameEngineContract,
   MoveResult,
-} from '../../specs/001-game-rules-md/contracts/game-engine-interface';
+} from '../../src/interfaces/game-engine-interface';
 
 // Mock types based on data model - these will be replaced by real implementations
 interface Card {

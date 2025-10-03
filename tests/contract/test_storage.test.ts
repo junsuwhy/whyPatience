@@ -14,7 +14,7 @@ import {
   BackupContract,
   BackupData,
   BackupMetadata,
-} from '../../specs/001-game-rules-md/contracts/storage-interface';
+} from '../../src/interfaces/storage-interface';
 import {
   GameState,
   UserPreferences,

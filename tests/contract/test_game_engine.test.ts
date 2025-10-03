@@ -10,7 +10,7 @@ import {
   UndoResult,
   DrawResult,
   GameEngineEvents,
-} from '../../specs/001-game-rules-md/contracts/game-engine-interface';
+} from '../../src/interfaces/game-engine-interface';
 import {
   Card,
   Position,

@@ -57,7 +57,9 @@ const victoryAnimation = keyframes`
 /**
  * Main game board container with responsive design
  */
-export const GameBoardContainer = styled.div<{
+export const GameBoardContainer = styled.div.withConfig({
+  shouldForwardProp: prop => !['isDisabled', 'isGameWon'].includes(prop),
+})<{
   isDisabled?: boolean;
   isGameWon?: boolean;
 }>`

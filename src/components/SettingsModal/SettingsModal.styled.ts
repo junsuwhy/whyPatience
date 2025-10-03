@@ -32,7 +32,9 @@ const overlayFadeIn = keyframes`
 /**
  * Modal overlay that covers the entire screen.
  */
-export const ModalOverlay = styled.div<{ isOpen: boolean }>`
+export const ModalOverlay = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isOpen',
+})<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -64,7 +66,9 @@ export const ModalOverlay = styled.div<{ isOpen: boolean }>`
 /**
  * Main modal container.
  */
-export const ModalContainer = styled.div<{ isOpen: boolean }>`
+export const ModalContainer = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isOpen',
+})<{ isOpen: boolean }>`
   background: white;
   border-radius: 12px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -184,7 +188,9 @@ export const SettingsSections = styled.div`
 /**
  * Individual settings section.
  */
-export const SettingsSection = styled.div<{ isExpanded?: boolean }>`
+export const SettingsSection = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isExpanded',
+})<{ isExpanded?: boolean }>`
   border: 1px solid #e9ecef;
   border-radius: 8px;
   overflow: hidden;
@@ -198,7 +204,9 @@ export const SettingsSection = styled.div<{ isExpanded?: boolean }>`
 /**
  * Section header (clickable if collapsible).
  */
-export const SectionHeader = styled.div<{ isCollapsible?: boolean }>`
+export const SectionHeader = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isCollapsible',
+})<{ isCollapsible?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -238,7 +246,9 @@ export const SectionHeader = styled.div<{ isCollapsible?: boolean }>`
 /**
  * Section expand/collapse icon.
  */
-export const SectionIcon = styled.span<{ isExpanded: boolean }>`
+export const SectionIcon = styled.span.withConfig({
+  shouldForwardProp: prop => prop !== 'isExpanded',
+})<{ isExpanded: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,7 +261,9 @@ export const SectionIcon = styled.span<{ isExpanded: boolean }>`
 /**
  * Section content area.
  */
-export const SectionContent = styled.div<{ isCollapsed?: boolean }>`
+export const SectionContent = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isCollapsed',
+})<{ isCollapsed?: boolean }>`
   padding: ${({ isCollapsed }) => (isCollapsed ? '0 20px' : '20px')};
   max-height: ${({ isCollapsed }) => (isCollapsed ? '0' : '1000px')};
   overflow: hidden;
@@ -501,7 +513,9 @@ export const ButtonGroup = styled.div`
 /**
  * Action button base styles.
  */
-export const ActionButton = styled.button<{
+export const ActionButton = styled.button.withConfig({
+  shouldForwardProp: prop => !['variant', 'isLoading'].includes(prop),
+})<{
   variant?: 'primary' | 'secondary' | 'danger';
   isLoading?: boolean;
 }>`
@@ -617,7 +631,9 @@ export const ErrorMessage = styled.div`
 /**
  * Loading overlay for the modal.
  */
-export const LoadingOverlay = styled.div<{ isVisible: boolean }>`
+export const LoadingOverlay = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'isVisible',
+})<{ isVisible: boolean }>`
   position: absolute;
   top: 0;
   left: 0;

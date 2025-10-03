@@ -6,7 +6,13 @@
  * constitutional requirements for code quality and performance.
  */
 
-import React, { useCallback, useMemo, KeyboardEvent, MouseEvent } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
+} from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { Card as CardType, Rank, Color, getCardColor } from '../../types/card';
 import {
@@ -15,6 +21,8 @@ import {
   CardDropResult,
   defaultCardTheme,
 } from './Card.types';
+import { useCardAnimation } from '../../hooks/useCardAnimation';
+import { LAYER_NAMES } from '../../styles/animation';
 import {
   CardContainer,
   CardFront,
@@ -47,16 +55,38 @@ const getRankDisplay = (rank: Rank): string => {
 /**
  * Helper function to generate ARIA label for screen readers
  */
-const getCardAriaLabel = (card: CardType, isRevealed: boolean): string => {
+const getCardAriaLabel = (
+  card: CardType,
+  isRevealed: boolean,
+  position?: any
+): string => {
   if (!isRevealed) {
     return 'Face down card';
   }
 
   const rankName = getRankDisplay(card.rank);
   const suitName = card.suit.charAt(0).toUpperCase() + card.suit.slice(1);
-  const colorName = card.color === Color.RED ? 'red' : 'black';
+  const colorName = getCardColor(card.suit) === Color.RED ? 'red' : 'black';
 
-  return `${rankName} of ${suitName}, ${colorName} card`;
+  let locationInfo = '';
+  if (position) {
+    switch (position.area) {
+      case 'foundation':
+        locationInfo = `, in foundation pile ${position.index + 1}`;
+        break;
+      case 'tableau':
+        locationInfo = `, in tableau column ${position.index + 1}`;
+        break;
+      case 'stock':
+        locationInfo = ', in stock pile';
+        break;
+      case 'waste':
+        locationInfo = ', in waste pile';
+        break;
+    }
+  }
+
+  return `${rankName} of ${suitName}, ${colorName} card${locationInfo}`;
 };
 
 /**
@@ -83,6 +113,7 @@ export const Card: React.FC<CardProps> = React.memo(
     isDisabled = false,
     scale = 1,
     zIndex = 0,
+    animationMode = 'full',
     onClick,
     onDoubleClick,
     onKeyDown,
@@ -95,6 +126,13 @@ export const Card: React.FC<CardProps> = React.memo(
     style,
     ...props
   }) => {
+    // Initialize animation hook
+    const {
+      dataAttributes,
+      setDragging,
+      startAnimation,
+      prefersReducedMotion,
+    } = useCardAnimation(animationMode);
     // Determine if card is revealed (face up)
     const isRevealed = card.isVisible;
 
@@ -103,9 +141,21 @@ export const Card: React.FC<CardProps> = React.memo(
 
     // Generate ARIA label
     const ariaLabel = useMemo(
-      () => getCardAriaLabel(card, isRevealed),
-      [card, isRevealed]
+      () => getCardAriaLabel(card, isRevealed, position),
+      [card, isRevealed, position]
     );
+
+    // Handle card flip animation when visibility changes
+    useEffect(() => {
+      if (card.isVisible !== undefined) {
+        startAnimation(LAYER_NAMES.FLIP, {
+          duration: 200,
+          onComplete: () => {
+            // Animation complete
+          },
+        });
+      }
+    }, [card.isVisible, startAnimation]);
 
     // React DnD drag configuration
     const [{ isDraggingState }, dragRef] = useDrag<
@@ -115,6 +165,7 @@ export const Card: React.FC<CardProps> = React.memo(
     >({
       type: 'card',
       item: () => {
+        setDragging(true);
         onDragStart?.(card, position);
         return {
           type: 'card',
@@ -123,6 +174,7 @@ export const Card: React.FC<CardProps> = React.memo(
         };
       },
       end: () => {
+        setDragging(false);
         onDragEnd?.(card, position);
       },
       canDrag: () => isDraggable && !isDisabled,
@@ -255,13 +307,16 @@ export const Card: React.FC<CardProps> = React.memo(
         onDoubleClick={handleDoubleClick}
         onKeyDown={handleKeyDown}
         tabIndex={isDisabled ? -1 : 0}
-        role="button"
+        role="gridcell"
         aria-label={ariaLabel}
         aria-pressed={isSelected}
         aria-disabled={isDisabled}
+        aria-grabbed={isDraggingState}
+        aria-describedby={position ? `game-area-${position.area}` : undefined}
         data-testid={testId || `card-${card.id}`}
         className={className}
         style={style}
+        {...dataAttributes}
         {...props}
       >
         {/* Card Front Face */}
@@ -293,6 +348,7 @@ Card.defaultProps = {
   isDisabled: false,
   scale: 1,
   zIndex: 0,
+  animationMode: 'full',
 };
 
 export default Card;

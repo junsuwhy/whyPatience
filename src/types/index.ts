@@ -24,11 +24,17 @@ export enum Rank {
   KING = 13,
 }
 
+export enum Color {
+  RED = 'red',
+  BLACK = 'black',
+}
+
 export interface Card {
+  id: string;
   suit: Suit;
   rank: Rank;
-  faceUp: boolean;
-  id: string;
+  color: Color;
+  isVisible: boolean;
 }
 
 export enum DrawMode {
@@ -121,7 +127,7 @@ export type {
   BackupContract,
   BackupData,
   BackupMetadata,
-} from '../../specs/001-game-rules-md/contracts/storage-interface';
+} from '../interfaces/storage-interface';
 
 // Export storage service
 export {

@@ -5,7 +5,8 @@
  */
 
 import React, { MouseEvent, KeyboardEvent } from 'react';
-import { Card, Position } from '../../types';
+import { Card } from '../../types/card';
+import { Position } from '../../types/game-state';
 
 /**
  * Props interface for the TableauColumn component

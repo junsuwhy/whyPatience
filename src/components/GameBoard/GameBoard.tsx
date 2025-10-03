@@ -15,8 +15,6 @@ import React, {
   useState,
   useMemo,
 } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 // Import components
 import { FoundationPile } from '../FoundationPile';
@@ -27,6 +25,7 @@ import { EnhancedGameStatistics as GameStatistics } from '../GameStatistics/Game
 
 // Import hooks
 import { useGameState } from '../../hooks/useGameState';
+import { useFocusNavigation } from '../../hooks/useFocusNavigation';
 
 // Import types and models
 import { GameState, GameArea, Position } from '../../types/game-state';
@@ -141,18 +140,26 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     } = useGameState(initialGameState?.settings);
 
     // Component local state
-    const [selectedCard, setSelectedCard] = useState<Card | null>(null);
     const [gameMessage, setGameMessage] = useState<string>('');
-    const [focusedElement, setFocusedElement] = useState<{
-      area: GameArea;
-      index: number;
-    } | null>(null);
+
+    // Initialize focus navigation
+    const {
+      focusedElement,
+      selectedCard,
+      ariaLiveMessage,
+      setSelectedCard,
+      mainContainerProps,
+      getElementProps,
+      ariaLiveProps,
+    } = useFocusNavigation(gameState, {
+      announceNavigation: true,
+      announceActions: true,
+      enableHints: true,
+      enableAutoMove: true,
+    });
 
     // Refs for focus management
     const gameBoardRef = useRef<HTMLDivElement>(null);
-    const foundationRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const tableauRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const stockRef = useRef<HTMLDivElement>(null);
     const controlsRef = useRef<HTMLDivElement>(null);
 
     // Check if game is won
@@ -161,24 +168,39 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     // Convert plain state objects to model instances for components
     const foundationPileModels = useMemo(() => {
       return gameState.foundation.map(foundationState => {
-        const cards = foundationState.cards.map(card => CardModel.fromJSON(card));
-        return new FoundationPileModel(foundationState.suit || undefined, cards);
+        const cards = foundationState.cards.map(card =>
+          CardModel.fromJSON(card)
+        );
+        return new FoundationPileModel(
+          foundationState.suit || undefined,
+          cards
+        );
       });
     }, [gameState.foundation]);
 
+    // TODO: Use tableauColumnModels for enhanced functionality
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const tableauColumnModels = useMemo(() => {
       return gameState.tableau.map(tableauState => {
         const cards = tableauState.cards.map(card => CardModel.fromJSON(card));
-        return new TableauColumnModel(tableauState.id, cards, tableauState.faceDownCount);
+        return new TableauColumnModel(
+          tableauState.id,
+          cards,
+          tableauState.faceDownCount
+        );
       });
     }, [gameState.tableau]);
 
     const stockPileModel = useMemo(() => {
-      const stockCards = gameState.stock.cards.map(card => CardModel.fromJSON(card));
+      const stockCards = gameState.stock.cards.map(card =>
+        CardModel.fromJSON(card)
+      );
       const pile = new StockPileModel(stockCards, gameState.stock.drawMode);
       // Set waste cards if they exist
       if (gameState.stock.wasteCards && gameState.stock.wasteCards.length > 0) {
-        const wasteCards = gameState.stock.wasteCards.map(card => CardModel.fromJSON(card));
+        const wasteCards = gameState.stock.wasteCards.map(card =>
+          CardModel.fromJSON(card)
+        );
         pile.waste = wasteCards;
       }
       return pile;
@@ -302,111 +324,6 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     }, [isDisabled, newGame, clearError, onError]);
 
     /**
-     * Focuses the DOM element for the given area and index
-     */
-    const focusElement = useCallback((area: GameArea, index: number) => {
-      switch (area) {
-        case GameArea.FOUNDATION:
-          foundationRefs.current[index]?.focus();
-          break;
-        case GameArea.TABLEAU:
-          tableauRefs.current[index]?.focus();
-          break;
-        case GameArea.STOCK:
-          stockRef.current?.focus();
-          break;
-      }
-    }, []);
-
-    /**
-     * Handles focus navigation with arrow keys
-     */
-    const handleFocusNavigation = useCallback(
-      (key: string) => {
-        if (!focusedElement) {
-          // Start navigation from first foundation pile
-          setFocusedElement({ area: GameArea.FOUNDATION, index: 0 });
-          return;
-        }
-
-        const { area, index } = focusedElement;
-        let newArea = area;
-        let newIndex = index;
-
-        switch (key) {
-          case 'ArrowRight':
-            if (area === GameArea.FOUNDATION && index < 3) {
-              newIndex = index + 1;
-            } else if (area === GameArea.TABLEAU && index < 6) {
-              newIndex = index + 1;
-            } else if (area === GameArea.FOUNDATION && index === 3) {
-              newArea = GameArea.STOCK;
-              newIndex = 0;
-            }
-            break;
-          case 'ArrowLeft':
-            if (area === GameArea.FOUNDATION && index > 0) {
-              newIndex = index - 1;
-            } else if (area === GameArea.TABLEAU && index > 0) {
-              newIndex = index - 1;
-            } else if (area === GameArea.STOCK) {
-              newArea = GameArea.FOUNDATION;
-              newIndex = 3;
-            }
-            break;
-          case 'ArrowDown':
-            if (area === GameArea.FOUNDATION) {
-              newArea = GameArea.TABLEAU;
-              newIndex = Math.min(index, 6);
-            }
-            break;
-          case 'ArrowUp':
-            if (area === GameArea.TABLEAU) {
-              newArea = GameArea.FOUNDATION;
-              newIndex = Math.min(index, 3);
-            }
-            break;
-        }
-
-        setFocusedElement({ area: newArea, index: newIndex });
-
-        // Focus the corresponding DOM element
-        focusElement(newArea, newIndex);
-      },
-      [focusedElement, focusElement]
-    );
-
-    /**
-     * Handles action on focused element (Enter/Space)
-     */
-    const handleFocusedElementAction = useCallback(() => {
-      if (!focusedElement) return;
-
-      const { area, index } = focusedElement;
-
-      if (area === GameArea.STOCK) {
-        handleStockDraw();
-      } else if (selectedCard) {
-        // Try to move selected card to focused position
-        const cardPosition = gameState.tableau
-          .concat(gameState.foundation)
-          .find(pile => pile.cards.some(c => c.id === selectedCard.id));
-
-        if (cardPosition) {
-          const from: Position = { area: GameArea.TABLEAU, index: 0 }; // Simplified
-          const to: Position = { area, index };
-          handleCardMove([selectedCard], from, to);
-        }
-      }
-    }, [
-      focusedElement,
-      selectedCard,
-      gameState,
-      handleStockDraw,
-      handleCardMove,
-    ]);
-
-    /**
      * Handles keyboard navigation
      */
     const handleKeyDown = useCallback(
@@ -437,36 +354,10 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
           return;
         }
 
-        // Navigation keys
-        switch (key) {
-          case 'ArrowUp':
-          case 'ArrowDown':
-          case 'ArrowLeft':
-          case 'ArrowRight':
-            event.preventDefault();
-            handleFocusNavigation(key);
-            break;
-          case 'Enter':
-          case ' ':
-            event.preventDefault();
-            handleFocusedElementAction();
-            break;
-          case 'Escape':
-            setSelectedCard(null);
-            setGameMessage('');
-            break;
-          default:
-            break;
-        }
+        // Use the focus navigation's keyboard handler
+        mainContainerProps.onKeyDown(event);
       },
-      [
-        isDisabled,
-        handleNewGame,
-        handleRestart,
-        handleUndo,
-        handleFocusNavigation,
-        handleFocusedElementAction,
-      ]
+      [isDisabled, handleNewGame, handleRestart, handleUndo, mainContainerProps]
     );
 
     /**
@@ -505,27 +396,41 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
      * Render foundation piles area
      */
     const renderFoundationArea = () => (
-      <FoundationArea role="region" aria-label="Foundation piles">
-        {foundationPileModels.map((pile, index) => (
-          <FoundationPile
-            key={`foundation-${index}`}
-            pile={pile}
-            position={{ area: GameArea.FOUNDATION, index }}
-            index={index}
-            isDisabled={isDisabled}
-            isSelected={
-              focusedElement?.area === GameArea.FOUNDATION &&
-              focusedElement.index === index
-            }
-            onCardAdd={card => {
-              const from: Position = { area: GameArea.TABLEAU, index: 0 }; // Simplified
-              const to: Position = { area: GameArea.FOUNDATION, index };
-              handleCardMove([card], from, to);
-            }}
-            ref={el => (foundationRefs.current[index] = el)}
-            data-testid={`foundation-pile-${index}`}
-          />
-        ))}
+      <FoundationArea
+        role="region"
+        aria-label="Foundation piles"
+        id="game-area-foundation"
+      >
+        {foundationPileModels.map((pile, index) => {
+          const elementProps = getElementProps(GameArea.FOUNDATION, index);
+          return (
+            <FoundationPile
+              key={`foundation-${index}`}
+              pile={pile}
+              position={{ area: GameArea.FOUNDATION, index }}
+              index={index}
+              isDisabled={isDisabled}
+              isSelected={
+                focusedElement?.area === GameArea.FOUNDATION &&
+                focusedElement.index === index
+              }
+              onCardAdd={card => {
+                const from: Position = { area: GameArea.TABLEAU, index: 0 }; // Simplified
+                const to: Position = { area: GameArea.FOUNDATION, index };
+                handleCardMove([card], from, to);
+              }}
+              ref={elementProps.ref}
+              onFocus={elementProps.onFocus}
+              tabIndex={elementProps.tabIndex}
+              role={elementProps.role}
+              aria-label={elementProps['aria-label']}
+              aria-current={elementProps['aria-current']}
+              aria-selected={elementProps['aria-selected']}
+              aria-describedby={elementProps['aria-describedby']}
+              data-testid={`foundation-pile-${index}`}
+            />
+          );
+        })}
       </FoundationArea>
     );
 
@@ -533,46 +438,75 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
      * Render tableau columns area
      */
     const renderTableauArea = () => (
-      <TableauArea role="region" aria-label="Tableau columns">
-        {gameState.tableau.map((column, index) => (
-          <TableauColumn
-            key={`tableau-${index}`}
-            cards={column.cards}
-            columnIndex={index}
-            isDisabled={isDisabled}
-            onMoveCards={handleCardMove}
-            onClick={(event, card) => {
-              if (card.isVisible) {
-                setSelectedCard(selectedCard?.id === card.id ? null : card);
-              }
-            }}
-            ref={el => (tableauRefs.current[index] = el)}
-            data-testid={`tableau-column-${index}`}
-          />
-        ))}
+      <TableauArea
+        role="region"
+        aria-label="Tableau columns"
+        id="game-area-tableau"
+      >
+        {gameState.tableau.map((column, index) => {
+          const elementProps = getElementProps(GameArea.TABLEAU, index);
+          return (
+            <TableauColumn
+              key={`tableau-${index}`}
+              cards={column.cards}
+              columnIndex={index}
+              isDisabled={isDisabled}
+              onMoveCards={handleCardMove}
+              onClick={(event, card) => {
+                if (card.isVisible) {
+                  setSelectedCard(selectedCard?.id === card.id ? null : card);
+                }
+              }}
+              ref={elementProps.ref}
+              onFocus={elementProps.onFocus}
+              tabIndex={elementProps.tabIndex}
+              role={elementProps.role}
+              aria-label={elementProps['aria-label']}
+              aria-current={elementProps['aria-current']}
+              aria-selected={elementProps['aria-selected']}
+              aria-describedby={elementProps['aria-describedby']}
+              data-testid={`tableau-column-${index}`}
+            />
+          );
+        })}
       </TableauArea>
     );
 
     /**
      * Render stock and waste pile area
      */
-    const renderStockArea = () => (
-      <StockArea role="region" aria-label="Stock and waste piles">
-        <StockPile
-          pile={stockPileModel}
-          position={{ area: GameArea.STOCK, index: 0 }}
-          isDisabled={isDisabled}
-          animationsEnabled={animationsEnabled}
-          soundEnabled={soundEnabled}
-          onDraw={handleStockDraw}
-          onWasteCardRemove={() => {
-            // Card will be moved by drag-and-drop handlers
-          }}
-          ref={stockRef}
-          data-testid="stock-pile"
-        />
-      </StockArea>
-    );
+    const renderStockArea = () => {
+      const stockElementProps = getElementProps(GameArea.STOCK, 0);
+
+      return (
+        <StockArea
+          role="region"
+          aria-label="Stock and waste piles"
+          id="game-area-stock"
+        >
+          <StockPile
+            pile={stockPileModel}
+            position={{ area: GameArea.STOCK, index: 0 }}
+            isDisabled={isDisabled}
+            animationsEnabled={animationsEnabled}
+            soundEnabled={soundEnabled}
+            onDraw={handleStockDraw}
+            onWasteCardRemove={() => {
+              // Card will be moved by drag-and-drop handlers
+            }}
+            ref={stockElementProps.ref}
+            onFocus={stockElementProps.onFocus}
+            tabIndex={stockElementProps.tabIndex}
+            role={stockElementProps.role}
+            aria-label={stockElementProps['aria-label']}
+            aria-current={stockElementProps['aria-current']}
+            aria-selected={stockElementProps['aria-selected']}
+            aria-describedby={stockElementProps['aria-describedby']}
+            data-testid="stock-pile"
+          />
+        </StockArea>
+      );
+    };
 
     /**
      * Render game controls area
@@ -637,46 +571,55 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
       );
 
     return (
-      <DndProvider backend={HTML5Backend}>
-        <GameBoardContainer
-          ref={gameBoardRef}
-          className={className}
-          style={style}
-          isDisabled={isDisabled}
-          isGameWon={isGameWon}
-          onKeyDown={handleKeyDown}
-          tabIndex={0}
-          role="application"
-          aria-label="Solitaire game board"
-          aria-describedby="game-instructions"
-          data-testid={testId || 'game-board'}
+      <GameBoardContainer
+        ref={gameBoardRef}
+        className={className}
+        style={style}
+        isDisabled={isDisabled}
+        isGameWon={isGameWon}
+        onKeyDown={handleKeyDown}
+        {...mainContainerProps}
+        data-testid={testId || 'game-board'}
+      >
+        <FocusManager
+          id="game-instructions"
+          aria-live="polite"
+          aria-atomic="true"
         >
-          <FocusManager
-            id="game-instructions"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            Use arrow keys to navigate, Enter/Space to select, Ctrl+N for new
-            game, Ctrl+Z to undo
-          </FocusManager>
+          Use arrow keys to navigate, Enter/Space to select, H for hints, A for
+          auto-move, Ctrl+N for new game, Ctrl+Z to undo
+        </FocusManager>
 
-          <GameBoardContent>
-            {renderFoundationArea()}
-            {renderStockArea()}
-            {renderTableauArea()}
-            {renderControlsArea()}
-            {renderStatisticsArea()}
-          </GameBoardContent>
+        {/* ARIA Live Region for game announcements */}
+        <div
+          {...ariaLiveProps}
+          style={{
+            position: 'absolute',
+            left: '-10000px',
+            width: '1px',
+            height: '1px',
+            overflow: 'hidden',
+          }}
+        >
+          {ariaLiveMessage}
+        </div>
 
-          {gameMessage && (
-            <GameMessage role="status" aria-live="polite">
-              {gameMessage}
-            </GameMessage>
-          )}
+        <GameBoardContent>
+          {renderFoundationArea()}
+          {renderStockArea()}
+          {renderTableauArea()}
+          {renderControlsArea()}
+          {renderStatisticsArea()}
+        </GameBoardContent>
 
-          {renderVictoryOverlay()}
-        </GameBoardContainer>
-      </DndProvider>
+        {gameMessage && (
+          <GameMessage role="status" aria-live="polite">
+            {gameMessage}
+          </GameMessage>
+        )}
+
+        {renderVictoryOverlay()}
+      </GameBoardContainer>
     );
   }
 );

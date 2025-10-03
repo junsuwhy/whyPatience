@@ -8,9 +8,11 @@
 
 import React, { useCallback, useMemo, KeyboardEvent, MouseEvent } from 'react';
 import { useDrop } from 'react-dnd';
-import { Card, Suit, Rank, CardPosition } from '../../types/index';
+import { Card, Suit, Rank, CardPosition } from '../../types/card';
 import { FoundationPile as FoundationPileModel } from '../../models/foundation-pile';
 import { CardDragItem, CardDropResult } from '../Card/Card.types';
+import { AnimationMode } from '../../types/preferences';
+import { useCardAnimation } from '../../hooks/useCardAnimation';
 import {
   FoundationPileContainer,
   FoundationPileContent,
@@ -69,6 +71,9 @@ export interface FoundationPileProps {
 
   /** Additional CSS class names */
   className?: string;
+
+  /** Animation mode for controlling animation complexity */
+  animationMode?: AnimationMode;
 
   /** Additional inline styles */
   style?: React.CSSProperties;
@@ -169,6 +174,7 @@ export const FoundationPile: React.FC<FoundationPileProps> = React.memo(
     index,
     isDisabled = false,
     isSelected = false,
+    animationMode = 'full',
     onCardAdd,
     onClick,
     onDoubleClick,
@@ -178,6 +184,8 @@ export const FoundationPile: React.FC<FoundationPileProps> = React.memo(
     style,
     ...props
   }) => {
+    // Initialize animation hook for pulse highlights
+    const { dataAttributes, startAnimation } = useCardAnimation(animationMode);
     // Get top card for display
     const topCard = pile.getTopCard();
 
@@ -322,6 +330,7 @@ export const FoundationPile: React.FC<FoundationPileProps> = React.memo(
         data-testid={testId || `foundation-pile-${index}`}
         className={className}
         style={style}
+        {...dataAttributes}
         {...props}
       >
         <FoundationPileContent>
