@@ -37,13 +37,16 @@ import {
 } from './GameStatistics.styled';
 
 // Import contract interface types
-import type { GameStatistics, OverallStatistics } from '../../types/game-state';
+import type {
+  GameStatistics as GameStatsType,
+  OverallStatistics,
+} from '../../types/game-state';
 
 /**
  * Contract-compliant props interface for GameStatistics
  */
 export interface GameStatisticsProps {
-  statistics: GameStatistics;
+  statistics: GameStatsType;
   overallStats: OverallStatistics;
   isGameActive: boolean;
   elapsedTime: number;
@@ -546,7 +549,7 @@ EnhancedGameStatistics.displayName = 'EnhancedGameStatistics';
 
 /**
  * Contract-compliant GameStatistics component
- * Throws an error to satisfy TDD red state in contract tests
+ * Now properly implemented using EnhancedGameStatistics
  */
 export const GameStatistics: React.FC<GameStatisticsProps> = ({
   statistics,
@@ -554,17 +557,13 @@ export const GameStatistics: React.FC<GameStatisticsProps> = ({
   isGameActive,
   elapsedTime,
 }) => {
-  // This should throw during TDD red phase to satisfy contract tests
-  throw new Error('GameStatistics component not implemented');
-
-  // Implementation would be:
-  // const enhancedProps = {
-  //   currentStats: { ...statistics, elapsedTime },
-  //   overallStats,
-  //   showRealTimeUpdates: isGameActive,
-  //   isCompact: false,
-  // };
-  // return <EnhancedGameStatistics {...enhancedProps} />;
+  const enhancedProps = {
+    currentStats: { ...statistics, elapsedTime },
+    overallStats,
+    showRealTimeUpdates: isGameActive,
+    isCompact: false,
+  };
+  return <EnhancedGameStatistics {...enhancedProps} />;
 };
 
 // Set display name for better debugging

@@ -134,6 +134,13 @@ npm run typecheck || tsc --noEmit
 
 # 監聽模式持續測試（開發時使用）
 npm test -- --watch --testPathPattern=test_useGameState.test.ts
+
+# 測試檔案已建立於:
+# - tests/unit/test_useGameState.test.ts (主要測試實作)
+# - specs/001-game-rules-md/tests/T036_useGameState-hook_test.ts (測試參考檔)
+
+# 主要測試執行指令（用於驗證 TDD 紅燈狀態）:
+npm test -- --testPathPattern=test_useGameState.test.ts
 ```
 
 ## AI 使用工具

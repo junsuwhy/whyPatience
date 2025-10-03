@@ -8,12 +8,11 @@
  */
 
 import React, {
-  useState,
   useEffect,
   useCallback,
-  useMemo,
   useRef,
   KeyboardEvent,
+  useState,
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -25,15 +24,13 @@ import { StockPile } from '../StockPile';
 import { GameControls } from '../GameControls';
 import { EnhancedGameStatistics as GameStatistics } from '../GameStatistics/GameStatistics';
 
+// Import hooks
+import { useGameState } from '../../hooks/useGameState';
+
 // Import types and models
-import {
-  GameState,
-  GamePhase,
-  GameArea,
-  Position,
-} from '../../types/game-state';
+import { GameState, GameArea, Position } from '../../types/game-state';
 import { Card } from '../../types/card';
-import { GameEngine, MoveResult } from '../../services/game-engine';
+import { MoveResult } from '../../services/game-engine';
 
 // Import styled components
 import {
@@ -118,21 +115,27 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     className,
     style,
   }) => {
-    // Game engine instance
-    const gameEngine = useRef<GameEngine>();
+    // Use the useGameState hook for state management
+    const {
+      gameState,
+      canUndo,
+      canRedo,
+      isWon,
+      isPaused,
+      isPlaying,
+      newGame,
+      executeMove,
+      undo,
+      redo,
+      pauseGame,
+      resumeGame,
+      statistics,
+      error,
+      clearError,
+      isLoading,
+    } = useGameState(initialGameState?.settings);
 
-    // Initialize game engine
-    if (!gameEngine.current) {
-      gameEngine.current = new GameEngine(initialGameState);
-      if (!initialGameState) {
-        gameEngine.current.initializeGame();
-      }
-    }
-
-    // Component state
-    const [gameState, setGameState] = useState<GameState>(() =>
-      gameEngine.current!.getGameState()
-    );
+    // Component local state
     const [selectedCard, setSelectedCard] = useState<Card | null>(null);
     const [gameMessage, setGameMessage] = useState<string>('');
     const [focusedElement, setFocusedElement] = useState<{
@@ -147,114 +150,84 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     const stockRef = useRef<HTMLDivElement>(null);
     const controlsRef = useRef<HTMLDivElement>(null);
 
-    // Memoized game statistics for performance
-    const gameStatistics = useMemo(
-      () => gameEngine.current!.getGameStatistics(),
-      [gameState]
-    );
-
     // Check if game is won
-    const isGameWon = gameState.phase === GamePhase.WON;
-
-    // Check if moves can be undone
-    const canUndo = gameEngine.current!.canUndo();
-
-    /**
-     * Updates the game state and notifies listeners
-     */
-    const updateGameState = useCallback(
-      (newState: GameState) => {
-        setGameState(newState);
-        onGameStateChange?.(newState);
-
-        // Check for victory
-        if (
-          newState.phase === GamePhase.WON &&
-          gameState.phase !== GamePhase.WON
-        ) {
-          onGameWon?.(newState);
-          setGameMessage('Congratulations! You won!');
-        }
-      },
-      [onGameStateChange, onGameWon, gameState.phase]
-    );
+    const isGameWon = isWon;
 
     /**
      * Handles card movement between different game areas
      */
     const handleCardMove = useCallback(
-      (cards: Card[], from: Position, to: Position) => {
+      async (cards: Card[], from: Position, to: Position) => {
         if (isDisabled || isGameWon) return;
 
         try {
-          const result = gameEngine.current!.moveCards(cards, from, to);
+          const success = await executeMove(from, to, cards);
 
-          if (result.success) {
-            updateGameState(result.newState);
-            onMove?.(result);
+          if (success) {
+            onMove?.({ success: true, newState: gameState, move: undefined });
             setGameMessage('');
             setSelectedCard(null);
           } else {
-            setGameMessage(result.error || 'Invalid move');
-            onError?.(new Error(result.error || 'Move failed'), 'card_move');
+            const errorMessage = error || 'Invalid move';
+            setGameMessage(errorMessage);
+            onError?.(new Error(errorMessage), 'card_move');
           }
-        } catch (error) {
+        } catch (err) {
           const errorMessage =
-            error instanceof Error ? error.message : 'Unknown error';
+            err instanceof Error ? err.message : 'Unknown error';
           setGameMessage(errorMessage);
-          onError?.(error as Error, 'card_move');
+          onError?.(err as Error, 'card_move');
         }
       },
-      [isDisabled, isGameWon, updateGameState, onMove, onError]
+      [isDisabled, isGameWon, executeMove, gameState, onMove, onError, error]
     );
 
     /**
      * Handles stock pile card drawing
      */
-    const handleStockDraw = useCallback(() => {
+    const handleStockDraw = useCallback(async () => {
       if (isDisabled || isGameWon) return;
 
       try {
-        const result = gameEngine.current!.drawFromStock();
+        // For stock draw, we need to execute a move from stock to waste
+        const from: Position = { area: GameArea.STOCK, index: 0 };
+        const to: Position = { area: GameArea.WASTE, index: 0 };
 
-        if (result.success) {
-          const newState = gameEngine.current!.getGameState();
-          updateGameState(newState);
+        const success = await executeMove(from, to, []);
+
+        if (success) {
           setGameMessage('');
         } else {
-          setGameMessage('Cannot draw cards');
+          setGameMessage(error || 'Cannot draw cards');
         }
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : 'Draw failed';
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Draw failed';
         setGameMessage(errorMessage);
-        onError?.(error as Error, 'stock_draw');
+        onError?.(err as Error, 'stock_draw');
       }
-    }, [isDisabled, isGameWon, updateGameState, onError]);
+    }, [isDisabled, isGameWon, executeMove, error, onError]);
 
     /**
      * Handles undo operation
      */
-    const handleUndo = useCallback(() => {
+    const handleUndo = useCallback(async () => {
       if (isDisabled || !canUndo) return;
 
       try {
-        const result = gameEngine.current!.undoMove();
+        const success = await undo();
 
-        if (result.success) {
-          updateGameState(result.newState);
+        if (success) {
           setGameMessage('Move undone');
           setSelectedCard(null);
         } else {
-          setGameMessage(result.error || 'Cannot undo');
+          setGameMessage(error || 'Cannot undo');
         }
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : 'Undo failed';
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Undo failed';
         setGameMessage(errorMessage);
-        onError?.(error as Error, 'undo');
+        onError?.(err as Error, 'undo');
       }
-    }, [isDisabled, canUndo, updateGameState, onError]);
+    }, [isDisabled, canUndo, undo, error, onError]);
 
     /**
      * Handles new game creation
@@ -263,27 +236,19 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
       if (isDisabled) return;
 
       try {
-        const newState = gameEngine.current!.initializeGame(
-          gameState.settings.drawMode
-        );
-        updateGameState(newState);
-        onNewGame?.(newState);
+        newGame();
+        onNewGame?.(gameState);
         setGameMessage('New game started');
         setSelectedCard(null);
         setFocusedElement(null);
-      } catch (error) {
+        clearError();
+      } catch (err) {
         const errorMessage =
-          error instanceof Error ? error.message : 'Failed to start new game';
+          err instanceof Error ? err.message : 'Failed to start new game';
         setGameMessage(errorMessage);
-        onError?.(error as Error, 'new_game');
+        onError?.(err as Error, 'new_game');
       }
-    }, [
-      isDisabled,
-      gameState.settings.drawMode,
-      updateGameState,
-      onNewGame,
-      onError,
-    ]);
+    }, [isDisabled, newGame, gameState, onNewGame, clearError, onError]);
 
     /**
      * Handles game restart
@@ -292,18 +257,123 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
       if (isDisabled) return;
 
       try {
-        const newState = gameEngine.current!.resetGame();
-        updateGameState(newState);
+        newGame(); // Use newGame for restart as well
         setGameMessage('Game restarted');
         setSelectedCard(null);
         setFocusedElement(null);
-      } catch (error) {
+        clearError();
+      } catch (err) {
         const errorMessage =
-          error instanceof Error ? error.message : 'Failed to restart game';
+          err instanceof Error ? err.message : 'Failed to restart game';
         setGameMessage(errorMessage);
-        onError?.(error as Error, 'restart');
+        onError?.(err as Error, 'restart');
       }
-    }, [isDisabled, updateGameState, onError]);
+    }, [isDisabled, newGame, clearError, onError]);
+
+    /**
+     * Handles focus navigation with arrow keys
+     */
+    const handleFocusNavigation = useCallback(
+      (key: string) => {
+        if (!focusedElement) {
+          // Start navigation from first foundation pile
+          setFocusedElement({ area: GameArea.FOUNDATION, index: 0 });
+          return;
+        }
+
+        const { area, index } = focusedElement;
+        let newArea = area;
+        let newIndex = index;
+
+        switch (key) {
+          case 'ArrowRight':
+            if (area === GameArea.FOUNDATION && index < 3) {
+              newIndex = index + 1;
+            } else if (area === GameArea.TABLEAU && index < 6) {
+              newIndex = index + 1;
+            } else if (area === GameArea.FOUNDATION && index === 3) {
+              newArea = GameArea.STOCK;
+              newIndex = 0;
+            }
+            break;
+          case 'ArrowLeft':
+            if (area === GameArea.FOUNDATION && index > 0) {
+              newIndex = index - 1;
+            } else if (area === GameArea.TABLEAU && index > 0) {
+              newIndex = index - 1;
+            } else if (area === GameArea.STOCK) {
+              newArea = GameArea.FOUNDATION;
+              newIndex = 3;
+            }
+            break;
+          case 'ArrowDown':
+            if (area === GameArea.FOUNDATION) {
+              newArea = GameArea.TABLEAU;
+              newIndex = Math.min(index, 6);
+            }
+            break;
+          case 'ArrowUp':
+            if (area === GameArea.TABLEAU) {
+              newArea = GameArea.FOUNDATION;
+              newIndex = Math.min(index, 3);
+            }
+            break;
+        }
+
+        setFocusedElement({ area: newArea, index: newIndex });
+
+        // Focus the corresponding DOM element
+        focusElement(newArea, newIndex);
+      },
+      [focusedElement, focusElement]
+    );
+
+    /**
+     * Focuses the DOM element for the given area and index
+     */
+    const focusElement = useCallback((area: GameArea, index: number) => {
+      switch (area) {
+        case GameArea.FOUNDATION:
+          foundationRefs.current[index]?.focus();
+          break;
+        case GameArea.TABLEAU:
+          tableauRefs.current[index]?.focus();
+          break;
+        case GameArea.STOCK:
+          stockRef.current?.focus();
+          break;
+      }
+    }, []);
+
+    /**
+     * Handles action on focused element (Enter/Space)
+     */
+    const handleFocusedElementAction = useCallback(() => {
+      if (!focusedElement) return;
+
+      const { area, index } = focusedElement;
+
+      if (area === GameArea.STOCK) {
+        handleStockDraw();
+      } else if (selectedCard) {
+        // Try to move selected card to focused position
+        const cardPosition = gameState.tableau
+          .concat(gameState.foundation)
+          .find(pile => pile.cards.some(c => c.id === selectedCard.id));
+
+        if (cardPosition) {
+          const from: Position = { area: GameArea.TABLEAU, index: 0 }; // Simplified
+          const to: Position = { area, index };
+          handleCardMove([selectedCard], from, to);
+        }
+      }
+    }, [
+      focusedElement,
+      selectedCard,
+      gameState,
+      handleStockDraw,
+      handleCardMove,
+    ]);
 
     /**
      * Handles keyboard navigation
@@ -369,106 +439,6 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     );
 
     /**
-     * Handles focus navigation with arrow keys
-     */
-    const handleFocusNavigation = useCallback(
-      (key: string) => {
-        if (!focusedElement) {
-          // Start navigation from first foundation pile
-          setFocusedElement({ area: GameArea.FOUNDATION, index: 0 });
-          return;
-        }
-
-        const { area, index } = focusedElement;
-        let newArea = area;
-        let newIndex = index;
-
-        switch (key) {
-          case 'ArrowRight':
-            if (area === GameArea.FOUNDATION && index < 3) {
-              newIndex = index + 1;
-            } else if (area === GameArea.TABLEAU && index < 6) {
-              newIndex = index + 1;
-            } else if (area === GameArea.FOUNDATION && index === 3) {
-              newArea = GameArea.STOCK;
-              newIndex = 0;
-            }
-            break;
-          case 'ArrowLeft':
-            if (area === GameArea.FOUNDATION && index > 0) {
-              newIndex = index - 1;
-            } else if (area === GameArea.TABLEAU && index > 0) {
-              newIndex = index - 1;
-            } else if (area === GameArea.STOCK) {
-              newArea = GameArea.FOUNDATION;
-              newIndex = 3;
-            }
-            break;
-          case 'ArrowDown':
-            if (area === GameArea.FOUNDATION) {
-              newArea = GameArea.TABLEAU;
-              newIndex = Math.min(index, 6);
-            }
-            break;
-          case 'ArrowUp':
-            if (area === GameArea.TABLEAU) {
-              newArea = GameArea.FOUNDATION;
-              newIndex = Math.min(index, 3);
-            }
-            break;
-        }
-
-        setFocusedElement({ area: newArea, index: newIndex });
-
-        // Focus the corresponding DOM element
-        focusElement(newArea, newIndex);
-      },
-      [focusedElement]
-    );
-
-    /**
-     * Focuses the DOM element for the given area and index
-     */
-    const focusElement = useCallback((area: GameArea, index: number) => {
-      switch (area) {
-        case GameArea.FOUNDATION:
-          foundationRefs.current[index]?.focus();
-          break;
-        case GameArea.TABLEAU:
-          tableauRefs.current[index]?.focus();
-          break;
-        case GameArea.STOCK:
-          stockRef.current?.focus();
-          break;
-      }
-    }, []);
-
-    /**
-     * Handles action on focused element (Enter/Space)
-     */
-    const handleFocusedElementAction = useCallback(() => {
-      if (!focusedElement) return;
-
-      const { area, index } = focusedElement;
-
-      if (area === GameArea.STOCK) {
-        handleStockDraw();
-      } else if (selectedCard) {
-        // Try to move selected card to focused position
-        const cardPosition = gameEngine
-          .current!.getGameState()
-          .tableau.concat(gameEngine.current!.getGameState().foundation)
-          .find(pile => pile.cards.some(c => c.id === selectedCard.id));
-
-        if (cardPosition) {
-          const from: Position = { area: GameArea.TABLEAU, index: 0 }; // Simplified
-          const to: Position = { area, index };
-          handleCardMove([selectedCard], from, to);
-        }
-      }
-    }, [focusedElement, selectedCard, handleStockDraw, handleCardMove]);
-
-    /**
      * Clear game message after timeout
      */
     useEffect(() => {
@@ -479,22 +449,26 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     }, [gameMessage]);
 
     /**
-     * Update game statistics periodically
+     * Update error message when error state changes
      */
     useEffect(() => {
-      if (gameState.phase === GamePhase.PLAYING) {
-        const interval = window.setInterval(() => {
-          const newState = gameEngine.current!.getGameState();
-          if (
-            newState.statistics.elapsedTime !== gameState.statistics.elapsedTime
-          ) {
-            setGameState(newState);
-          }
-        }, 1000);
-
-        return () => window.clearInterval(interval);
+      if (error) {
+        setGameMessage(error);
       }
-    }, [gameState.phase, gameState.statistics.elapsedTime]);
+    }, [error]);
+
+    /**
+     * Notify parent components when game state changes
+     */
+    useEffect(() => {
+      onGameStateChange?.(gameState);
+
+      // Check for victory
+      if (isWon && !gameMessage.includes('Congratulations')) {
+        onGameWon?.(gameState);
+        setGameMessage('Congratulations! You won!');
+      }
+    }, [gameState, isWon, onGameStateChange, onGameWon, gameMessage]);
 
     /**
      * Render foundation piles area
@@ -577,15 +551,15 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
         <GameControls
           gameState={gameState}
           canUndo={canUndo}
-          canRedo={false} // Not implemented yet
-          isPaused={gameState.phase === GamePhase.PAUSED}
-          isLoading={false}
+          canRedo={canRedo}
+          isPaused={isPaused}
+          isLoading={isLoading}
           onNewGame={handleNewGame}
           onRestart={handleRestart}
           onUndo={handleUndo}
-          onRedo={() => {}} // Not implemented yet
-          onPause={() => {}} // Not implemented yet
-          onResume={() => {}} // Not implemented yet
+          onRedo={async () => await redo()}
+          onPause={pauseGame}
+          onResume={resumeGame}
           onSettings={() => {}} // To be connected to settings modal
           onStatistics={() => {}} // To be connected to statistics modal
           ref={controlsRef}
@@ -600,9 +574,9 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
     const renderStatisticsArea = () => (
       <StatisticsArea>
         <GameStatistics
-          currentStats={gameStatistics}
+          currentStats={statistics}
           overallStats={null} // To be connected to overall statistics
-          showRealTimeUpdates={gameState.phase === GamePhase.PLAYING}
+          showRealTimeUpdates={isPlaying}
           isCompact={true}
           data-testid="game-statistics"
         />
@@ -621,8 +595,9 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
         >
           <VictoryMessage id="victory-message">
             <h2>🎉 Congratulations! 🎉</h2>
-            <p>You completed the game in {gameStatistics.moveCount} moves!</p>
-            <p>Time: {Math.floor(gameStatistics.elapsedTime / 1000)} seconds</p>
+            <p>You completed the game in {statistics.moveCount} moves!</p>
+            <p>Time: {Math.floor(statistics.elapsedTime / 1000)} seconds</p>
+            <p>Score: {statistics.score}</p>
             <button onClick={handleNewGame} autoFocus>
               Play Again
             </button>

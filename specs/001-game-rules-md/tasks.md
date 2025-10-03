@@ -86,14 +86,14 @@
 
 ### Custom Hooks and Services
 
-- [ ] T036 [P] useGameState hook in src/hooks/useGameState.ts
-- [ ] T037 [P] useDragAndDrop hook in src/hooks/useDragAndDrop.ts
-- [ ] T038 [P] useLocalStorage hook in src/hooks/useLocalStorage.ts
-- [ ] T039 [P] useGameStatistics hook in src/hooks/useGameStatistics.ts
+- [x] T036 [P] useGameState hook in src/hooks/useGameState.ts
+- [x] T037 [P] useDragAndDrop hook in src/hooks/useDragAndDrop.ts
+- [x] T038 [P] useLocalStorage hook in src/hooks/useLocalStorage.ts
+- [x] T039 [P] useGameStatistics hook in src/hooks/useGameStatistics.ts
 
 ## Phase 3.4: Integration
 
-- [ ] T040 Connect GameBoard to game engine service
+- [x] T040 Connect GameBoard to game engine service
 - [ ] T041 Integrate React DnD with card components
 - [ ] T042 Add card animation system with styled-components
 - [ ] T043 Implement keyboard navigation and accessibility
