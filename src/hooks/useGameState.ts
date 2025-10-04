@@ -21,6 +21,7 @@
 import { useReducer, useCallback, useMemo, useEffect, useRef } from 'react';
 import { GameEngine, MoveResult, UndoResult } from '../services/game-engine';
 import { StorageService } from '../services/storage';
+import { useStorage } from '../context/StorageContext';
 import {
   GameState,
   GamePhase,
@@ -232,6 +233,9 @@ function gameStateReducer(
 export function useGameState(
   initialSettings?: Partial<GameSettings>
 ): UseGameStateReturn {
+  // Use storage context for game state persistence
+  const { saveGameState, updateGameResult, preferences } = useStorage();
+
   // Initialize services
   const gameEngineRef = useRef<GameEngine | null>(null);
   const storageServiceRef = useRef<StorageService | null>(null);
@@ -416,6 +420,22 @@ export function useGameState(
             },
           });
           dispatch({ type: GameStateActionType.CLEAR_ERROR });
+
+          // Trigger throttled save if auto-save is enabled
+          if (preferences?.gameplay?.autoSave) {
+            saveGameState(moveResult.newState);
+          }
+
+          // Check for game completion and update statistics
+          if (moveResult.newState.phase === GamePhase.WON) {
+            const elapsedTime = Date.now() - moveResult.newState.startTime;
+            updateGameResult(
+              true,
+              moveResult.newState.statistics.moveCount,
+              elapsedTime
+            );
+          }
+
           return true;
         } else {
           dispatch({
@@ -434,7 +454,12 @@ export function useGameState(
         return false;
       }
     },
-    [gameEngine]
+    [
+      gameEngine,
+      preferences?.gameplay?.autoSave,
+      saveGameState,
+      updateGameResult,
+    ]
   );
 
   const undo = useCallback(async (): Promise<boolean> => {

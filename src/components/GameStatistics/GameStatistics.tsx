@@ -19,6 +19,7 @@ import {
   StatisticConfig,
   GameStatisticsState,
 } from './GameStatistics.types';
+import { useStorage } from '../../context/StorageContext';
 import {
   StatisticsContainer,
   StatisticsHeader,
@@ -528,7 +529,27 @@ export const EnhancedGameStatistics: React.FC<EnhancedGameStatisticsProps> =
               <span className="title-icon">📊</span>
               Statistics
             </StatisticsTitle>
-            {renderModeToggle()}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {renderModeToggle()}
+              {onStatisticClick && (
+                <button
+                  onClick={() => onStatisticClick('refresh')}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: 'inherit',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    fontSize: '12px',
+                    cursor: 'pointer',
+                  }}
+                  title="重新整理統計資料"
+                  aria-label="重新整理統計資料"
+                >
+                  🔄
+                </button>
+              )}
+            </div>
           </StatisticsHeader>
 
           <StatisticsGrid
@@ -557,12 +578,48 @@ export const GameStatistics: React.FC<GameStatisticsProps> = ({
   isGameActive,
   elapsedTime,
 }) => {
+  // Use storage context for statistics
+  const {
+    statistics: storageStats,
+    refreshStatistics,
+    lastError,
+  } = useStorage();
+
+  // Use storage statistics if available, fallback to props
+  const effectiveOverallStats = storageStats || overallStats;
+
   const enhancedProps = {
     currentStats: { ...statistics, elapsedTime },
-    overallStats,
+    overallStats: effectiveOverallStats,
     showRealTimeUpdates: isGameActive,
     isCompact: false,
+    onStatisticClick: (statisticId: string) => {
+      if (statisticId === 'refresh') {
+        refreshStatistics();
+      }
+    },
   };
+
+  // Show error state if storage failed and no fallback data
+  if (lastError && !effectiveOverallStats) {
+    return (
+      <StatisticsContainer
+        isCompact={false}
+        displayMode={StatisticsDisplayMode.OVERALL}
+      >
+        <LoadingState>
+          <div style={{ color: '#f44336' }}>統計資料載入失敗 (暫無資料)</div>
+          <button
+            onClick={refreshStatistics}
+            style={{ marginTop: '8px', padding: '4px 8px', fontSize: '12px' }}
+          >
+            重新整理
+          </button>
+        </LoadingState>
+      </StatisticsContainer>
+    );
+  }
+
   return <EnhancedGameStatistics {...enhancedProps} />;
 };
 

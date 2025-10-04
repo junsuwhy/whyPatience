@@ -91,13 +91,16 @@
 ### 執行測試語法指令
 
 ```bash
-# 執行所有單元測試
-npm test -- tests/unit/test_storage_integration.test.ts
+# 執行 T044 專用單元測試
+npm test -- tests/unit/T044_storage_integration.test.ts
 
-# 執行整合測試
-npm test -- tests/integration/test_storage_wiring.test.ts
+# 執行 T044 專用整合測試
+npm test -- tests/integration/T044_storage_wiring.test.ts
 
-# 僅跑包含 storage 關鍵字的測試
+# 僅跑包含 T044 關鍵字的測試
+npm test -- --testNamePattern=T044
+
+# 執行所有 storage 相關測試
 npm test -- --testNamePattern=storage
 
 # 全部測試（含覆蓋率）

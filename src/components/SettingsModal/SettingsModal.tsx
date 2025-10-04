@@ -25,6 +25,7 @@ import {
   CardStyle,
   AnimationSpeed,
 } from '../../types/preferences';
+import { useStorage } from '../../context/StorageContext';
 import {
   SettingsModalProps,
   SettingsSection,
@@ -72,6 +73,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = React.memo(
     onReset,
     onDiscard,
   }) => {
+    // Use storage context for preferences management
+    const {
+      preferences: storagePreferences,
+      updatePreferences,
+      lastError: storageError,
+      clearError,
+    } = useStorage();
+
     // Internal state for modal management
     const [modalState, setModalState] = useState<ModalState>({
       isOpen: false,
@@ -82,9 +91,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = React.memo(
       showUnsavedWarning: false,
     });
 
-    // Local preferences state for form handling
-    const [localPreferences, setLocalPreferences] =
-      useState<UserPreferences>(preferences);
+    // Local preferences state for form handling - use storage preferences as source
+    const [localPreferences, setLocalPreferences] = useState<UserPreferences>(
+      storagePreferences || preferences || DEFAULT_USER_PREFERENCES
+    );
 
     // Refs for focus management
     const modalRef = useRef<HTMLDivElement>(null);
@@ -162,11 +172,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = React.memo(
     );
 
     /**
-     * Update local preferences when props change
+     * Update local preferences when storage preferences change
      */
     useEffect(() => {
-      setLocalPreferences(preferences);
-    }, [preferences]);
+      setLocalPreferences(
+        storagePreferences || preferences || DEFAULT_USER_PREFERENCES
+      );
+    }, [storagePreferences, preferences]);
 
     /**
      * Handle modal open/close state
@@ -183,7 +195,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = React.memo(
     }, [isOpen]);
 
     /**
-     * Handle preference updates
+     * Handle preference updates with storage integration
      */
     const handlePreferenceChange = useCallback(
       (path: string, value: unknown) => {
@@ -203,10 +215,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = React.memo(
         // Update lastModified timestamp
         updatedPreferences.lastModified = Date.now();
 
+        // Update local state immediately for responsive UI
         setLocalPreferences(updatedPreferences);
-        onPreferencesChange(updatedPreferences);
+
+        // Update storage context (this will handle debounced saving)
+        updatePreferences(updatedPreferences);
+
+        // Call legacy prop if provided
+        onPreferencesChange?.(updatedPreferences);
       },
-      [localPreferences, onPreferencesChange]
+      [localPreferences, updatePreferences, onPreferencesChange]
     );
 
     /**
@@ -896,6 +914,32 @@ export const SettingsModal: React.FC<SettingsModalProps> = React.memo(
           <ModalFooter>
             {hasUnsavedChanges && (
               <UnsavedChangesIndicator>Unsaved changes</UnsavedChangesIndicator>
+            )}
+
+            {storageError && (
+              <UnsavedChangesIndicator style={{ color: '#f44336' }}>
+                儲存失敗：
+                {storageError.message.includes('QUOTA_EXCEEDED')
+                  ? '儲存空間不足'
+                  : storageError.message.includes('PERMISSION_DENIED')
+                    ? '瀏覽器封鎖本地儲存'
+                    : storageError.message.includes('DATA_CORRUPTION')
+                      ? '資料損毀'
+                      : '儲存錯誤'}
+                <button
+                  onClick={clearError}
+                  style={{
+                    marginLeft: '8px',
+                    background: 'none',
+                    border: 'none',
+                    color: 'inherit',
+                    cursor: 'pointer',
+                  }}
+                  aria-label="清除錯誤"
+                >
+                  ✕
+                </button>
+              </UnsavedChangesIndicator>
             )}
 
             <ButtonGroup>

@@ -22,6 +22,8 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import { GameBoard } from './components/GameBoard';
+import { StorageProvider } from './context/StorageContext';
+import { StorageErrorBanner } from './components/StorageErrorBanner/StorageErrorBanner';
 
 // Styled Components
 const AppContainer = styled.div`
@@ -134,45 +136,51 @@ function App() {
 
   return (
     <ErrorBoundary>
-      {/* TODO: Future providers to be added here
-          - GameStateProvider (T036 useGameState)
-          - StatisticsProvider (T039 useGameStatistics)
-          These will wrap DndProvider when implemented
-      */}
-      <DndProvider backend={HTML5Backend}>
-        <AppContainer>
-          {/* Skip to main content link for accessibility */}
-          <SkipLink href="#main" className="skip-link">
-            跳到主要內容 (Skip to main content)
-          </SkipLink>
+      {/* Storage Provider for preferences, statistics, and game state persistence */}
+      <StorageProvider>
+        {/* TODO: Future providers to be added here
+            - GameStateProvider (T036 useGameState)
+            - StatisticsProvider (T039 useGameStatistics)
+            These will wrap DndProvider when implemented
+        */}
+        <DndProvider backend={HTML5Backend}>
+          {/* Storage error banner for user feedback */}
+          <StorageErrorBanner />
 
-          <AppHeader role="banner">
-            <AppTitle aria-label="Desktop Solitaire - Classic Card Game">
-              Desktop Solitaire
-            </AppTitle>
-            <AppDescription>
-              Classic card game built with React and TypeScript
-            </AppDescription>
-          </AppHeader>
+          <AppContainer>
+            {/* Skip to main content link for accessibility */}
+            <SkipLink href="#main" className="skip-link">
+              跳到主要內容 (Skip to main content)
+            </SkipLink>
 
-          <AppMain
-            id="main"
-            ref={mainRef}
-            role="main"
-            aria-label="Game area"
-            tabIndex={-1}
-          >
-            {/* TODO: Connect game state (T040) - currently using GameBoard's internal state */}
-            <GameBoard />
-          </AppMain>
+            <AppHeader role="banner">
+              <AppTitle aria-label="Desktop Solitaire - Classic Card Game">
+                Desktop Solitaire
+              </AppTitle>
+              <AppDescription>
+                Classic card game built with React and TypeScript
+              </AppDescription>
+            </AppHeader>
 
-          <AppFooter role="contentinfo">
-            <p>
-              © 2025 Desktop Solitaire | Built with React 18+ and TypeScript
-            </p>
-          </AppFooter>
-        </AppContainer>
-      </DndProvider>
+            <AppMain
+              id="main"
+              ref={mainRef}
+              role="main"
+              aria-label="Game area"
+              tabIndex={-1}
+            >
+              {/* TODO: Connect game state (T040) - currently using GameBoard's internal state */}
+              <GameBoard />
+            </AppMain>
+
+            <AppFooter role="contentinfo">
+              <p>
+                © 2025 Desktop Solitaire | Built with React 18+ and TypeScript
+              </p>
+            </AppFooter>
+          </AppContainer>
+        </DndProvider>
+      </StorageProvider>
     </ErrorBoundary>
   );
 }
