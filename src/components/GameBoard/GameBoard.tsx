@@ -148,6 +148,7 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
       selectedCard,
       ariaLiveMessage,
       setSelectedCard,
+      setFocusedElement,
       mainContainerProps,
       getElementProps,
       ariaLiveProps,
@@ -301,7 +302,7 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
         setGameMessage(errorMessage);
         onError?.(err as Error, 'new_game');
       }
-    }, [isDisabled, newGame, gameState, onNewGame, clearError, onError]);
+    }, [isDisabled, newGame, gameState, onNewGame, clearError, onError, setSelectedCard, setFocusedElement]);
 
     /**
      * Handles game restart
@@ -321,7 +322,7 @@ export const GameBoard: React.FC<GameBoardProps> = React.memo(
         setGameMessage(errorMessage);
         onError?.(err as Error, 'restart');
       }
-    }, [isDisabled, newGame, clearError, onError]);
+    }, [isDisabled, newGame, clearError, onError, setSelectedCard, setFocusedElement]);
 
     /**
      * Handles keyboard navigation

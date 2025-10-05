@@ -15,6 +15,7 @@ import React, {
 } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { Card as CardType, Rank, Color, getCardColor } from '../../types/card';
+import { Position } from '../../types/game-state';
 import {
   CardProps,
   CardDragItem,
@@ -58,7 +59,7 @@ const getRankDisplay = (rank: Rank): string => {
 const getCardAriaLabel = (
   card: CardType,
   isRevealed: boolean,
-  position?: any
+  position?: Position
 ): string => {
   if (!isRevealed) {
     return 'Face down card';
@@ -127,12 +128,8 @@ export const Card: React.FC<CardProps> = React.memo(
     ...props
   }) => {
     // Initialize animation hook
-    const {
-      dataAttributes,
-      setDragging,
-      startAnimation,
-      prefersReducedMotion,
-    } = useCardAnimation(animationMode);
+    const { dataAttributes, setDragging, startAnimation } =
+      useCardAnimation(animationMode);
     // Determine if card is revealed (face up)
     const isRevealed = card.isVisible;
 
@@ -146,8 +143,15 @@ export const Card: React.FC<CardProps> = React.memo(
     );
 
     // Handle card flip animation when visibility changes
+    // Use a ref to track previous visibility state to avoid continuous animations
+    const previousIsVisible = React.useRef<boolean | undefined>(undefined);
+
     useEffect(() => {
-      if (card.isVisible !== undefined) {
+      // Only animate if visibility actually changed from previous state
+      if (
+        previousIsVisible.current !== undefined &&
+        previousIsVisible.current !== card.isVisible
+      ) {
         startAnimation(LAYER_NAMES.FLIP, {
           duration: 200,
           onComplete: () => {
@@ -155,6 +159,7 @@ export const Card: React.FC<CardProps> = React.memo(
           },
         });
       }
+      previousIsVisible.current = card.isVisible;
     }, [card.isVisible, startAnimation]);
 
     // React DnD drag configuration

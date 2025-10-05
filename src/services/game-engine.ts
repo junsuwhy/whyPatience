@@ -11,7 +11,8 @@
  * and <16ms render time requirements.
  */
 
-import { Card, createStandardDeck, shuffleDeck } from '../models/card';
+import { Card, Rank } from '../types/card';
+import { createStandardDeck, shuffleDeck } from '../models/card';
 import { Move, MoveHistory } from '../models/move';
 import {
   GameState,
@@ -23,7 +24,6 @@ import {
   Position,
   GameStatistics,
 } from '../types/game-state';
-import { Rank } from '../types/card';
 
 /**
  * Result interface for move operations.

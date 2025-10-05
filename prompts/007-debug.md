@@ -4,9 +4,10 @@
 執行 npm run preview 後，用 playwright 幫我查看 preview 的頁面，並試著修復畫面
 
 目前可見待修正問題有：
-* 背景的動態漸層破版
+<!-- * 背景的動態漸層破版（可找 `CardBack` 或 `background: linear-gradient\(\n +90deg`(Regxp) 這串關鍵字 -->
+* 卡片變成不停在翻動，停不下來
 * 拖曳卡片會出現錯誤
-* Console 呈現的錯誤訊息
+* Console 呈現的所有錯誤訊息
 * 其他遊戲流程會碰到的問題
 
 執行過程的任何進展都請用 Discord Webhook 回報給我，

@@ -541,16 +541,4 @@ export function validateGameState(gameState: GameState): ValidationResult {
   }
 }
 
-// Export all validation functions
-export {
-  validateTableauMove,
-  validateFoundationMove,
-  validateStockPileOperation,
-  isValidCardSequence,
-  canPlaceOnFoundation,
-  canPlaceOnTableau,
-  isGameWon,
-  validateGameState,
-  GameValidationError,
-  type ValidationResult,
-};
+// Functions are already exported above individually
